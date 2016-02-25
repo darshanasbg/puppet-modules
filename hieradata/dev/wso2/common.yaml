@@ -26,6 +26,10 @@ wso2::hosts_mapping :
   localhost :
     ip_address : 127.0.0.1
     hostname : localhost
+  qaa-node1 :
+    ip_address : 127.0.0.1
+    hostname : qaa-node-1
+
 
 wso2::ipaddress : "%{::ipaddress}"
 wso2::fqdn : "%{::fqdn}"
@@ -47,7 +51,11 @@ wso2::template_list :
   - bin/wso2server.sh
 
 # File list to be copied to the server
-wso2::file_list : []
+## wso2::file_list : []
+wso2::file_list :
+  - repository/components/lib/mysql-connector-java-5.1.38-bin.jar
+  - repository/components/lib/trilead-ssh2-1.0.0-build215.jar
+
 
 # JVM settings
 wso2::jvm :
