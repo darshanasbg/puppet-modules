@@ -320,7 +320,9 @@ do
 <%- if @worker_node -%>
     -DworkerNode=true \
 <%- end -%>
+<%- if @product_profile != "am-manager" -%>
     -Dprofile=<%= @product_profile %> \
+<%- end -%>
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done
