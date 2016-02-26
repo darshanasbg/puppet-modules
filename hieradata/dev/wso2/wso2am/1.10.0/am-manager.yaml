@@ -106,8 +106,6 @@ wso2::master_datasources :
     validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
     validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
-wso2::datasources::common::h2username : 'wso2carbon'
-wso2::datasources::common::h2password : 'wso2carbon'
 
 # User management datasource change to user db
 wso2::usermgt_datasource: wso2user_db
