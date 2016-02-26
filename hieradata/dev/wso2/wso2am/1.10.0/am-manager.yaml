@@ -113,7 +113,7 @@ wso2::usermgt_datasource: wso2user_db
 
 # Deployment synchronization configuration
 wso2::dep_sync :
-    enabled : true
+    enabled : false
     auto_checkout : true
     auto_commit : true
     repository_type : svn
