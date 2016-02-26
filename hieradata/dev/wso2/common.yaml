@@ -29,7 +29,18 @@ wso2::hosts_mapping :
   qaa-node1 :
     ip_address : 127.0.0.1
     hostname : qaa-node-1
-
+  apimgtdb :
+    ip_address : 127.0.0.1
+    hostname : apimgtdb.mysql-wso2.com
+  configdb :
+    ip_address : 127.0.0.1
+    hostname : configdb.mysql-wso2.com
+  govdb :
+    ip_address : 127.0.0.1
+    hostname : govdb.mysql-wso2.com
+  userdb :
+    ip_address : 127.0.0.1
+    hostname : userdb.mysql-wso2.com
 
 wso2::ipaddress : "%{::ipaddress}"
 wso2::fqdn : "%{::fqdn}"
@@ -129,8 +140,8 @@ wso2::master_datasources :
 wso2::usermgt_datasource: wso2_carbon_db
 
 # Common datasources configuration
-wso2::datasources::common::username : 'wso2carbon'
-wso2::datasources::common::password : 'wso2carbon'
+wso2::datasources::common::username : 'root'
+wso2::datasources::common::password : 'root'
 wso2::datasources::common::max_active : '50'
 wso2::datasources::common::max_wait : '60000'
 wso2::datasources::common::default_auto_commit : 'false'
