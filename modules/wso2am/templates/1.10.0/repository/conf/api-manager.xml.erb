@@ -346,17 +346,29 @@
         <!--
             Server URL of the API key manager
         -->
-        <ServerURL>https://<%= @keymanager_subdomain %>.<%= @domain %>/services/</ServerURL>
+        <%- if @apim_keymanager and @apim_keymanager['host'] and @apim_keymanager['port'] -%>
+          <ServerURL>https://<%= @apim_keymanager['host'] %>:<%= @apim_keymanager['port'] %>/services/</ServerURL>
+        <%- else -%>
+           <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+        <%- end -%>
 
         <!--
             Admin username for API key manager.
         -->
-        <Username><%= @admin_username %></Username>
+        <%- if @apim_keymanager and @apim_keymanager['username'] -%>
+          <Username><%= @apim_keymanager['username'] %></Username>
+        <%- else -%>
+          <Username>${admin.username}</Username>
+        <%- end -%>
 
         <!--
             Admin password for API key manager.
         -->
-        <Password><%= @admin_password %></Password>
+        <%- if @apim_keymanager and @apim_keymanager['password'] -%>
+          <Password><%= @apim_keymanager['password'] %></Password>
+        <%- else -%>
+          <Password>${admin.password}</Password>
+        <%- end -%>
         <!--
             Enable/Disable JWT caching.
         -->
@@ -423,7 +435,11 @@
 	     gateway https( /http, we recommend users to use 'https' endpoints for security purpose) url.
          Also please note that we should point gateway revoke service to key manager
 	-->
-	<RevokeAPIURL>https://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %>/revoke</RevokeAPIURL>
+	<%- if @apim_gateway and @apim_gateway['host'] and @apim_gateway['api_endpoint_port'] and  @apim_gateway['secure_api_endpoint_port']-%>
+	<RevokeAPIURL>https://<%= @apim_gateway['host'] %>:<%= @apim_gateway['secure_api_endpoint_port'] %>/revoke</RevokeAPIURL>
+	<%- else -%>
+	<RevokeAPIURL>https://${carbon.local.ip}:${https.nio.port}/revoke</RevokeAPIURL>
+	<%- end -%>
 
 	<!-- Whether to encrypt tokens when storing in the Database
 	Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to
