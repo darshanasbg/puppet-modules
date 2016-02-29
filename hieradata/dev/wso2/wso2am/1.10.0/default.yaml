@@ -23,6 +23,29 @@ wso2::template_list :
 wso2::service_name: wso2am
 wso2::mgt_hostname : am.wso2.com
 
+wso2::apim_gateway :
+    host : am.wso2.com
+    port : 9443
+    api_endpoint_port : 8280
+    secure_api_endpoint_port : 8243
+    username : admin
+    password : admin
+
+wso2::apim_keymanager :
+    host : am.wso2.com
+    port : 9443
+    username : admin
+    password : admin
+
+wso2::apim_store :
+    host : am.wso2.com
+    port : 9443
+
+wso2::apim_publisher :
+    host : am.wso2.com
+    port : 9443
+
+
 # Clustering configuration
 wso2::clustering :
     enabled : true
@@ -67,8 +90,8 @@ wso2::master_datasources :
     description : The datasource used for registry and user manager
     driver_class_name : org.h2.Driver
     url : jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-    username : "%{hiera('wso2::datasources::common::username')}"
-    password : "%{hiera('wso2::datasources::common::password')}"
+    username : "%{hiera('wso2::datasources::common::h2username')}"
+    password : "%{hiera('wso2::datasources::common::h2password')}"
     #secretAlias :
     jndi_config : jdbc/WSO2CarbonDB
     max_active : "%{hiera('wso2::datasources::common::max_active')}"
@@ -77,4 +100,7 @@ wso2::master_datasources :
     default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
     validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
     validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
+
+wso2::datasources::common::h2username : 'wso2carbon'
+wso2::datasources::common::h2password : 'wso2carbon'
 

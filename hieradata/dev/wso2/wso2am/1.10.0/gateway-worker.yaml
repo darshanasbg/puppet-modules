@@ -12,9 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-java_install_dir: /mnt/jdk-7u79
-java_source_file: jdk-7u79-linux-i586.tar.gz
+wso2::hostname : "%{::clientcert}"
+wso2::mgt_hostname : am.wso2.com
 
-# symlink to Java install directory
-java_home: /opt/java
+# Clustering configuration
+wso2::worker_node: true
+wso2::clustering :
+    enabled : true
+    membership_scheme : wka
+    domain : wso2.am.domain
+    local_member_host : "%{hiera('wso2::ipaddress')}"
+    local_member_port : 4200
+    sub_domain : worker
+    wka :
+       members :
+         -
+           hostname : "%{hiera('wso2::ipaddress')}"
+           port : 4500
+         -
+           hostname : "%{hiera('wso2::ipaddress')}"
+           port : 4200
+    multicast :
+    k8s :
+    ppaas :

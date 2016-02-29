@@ -607,6 +607,17 @@
         <SvnUrlAppendTenantId><%= @dep_sync['svn']['append_tenant_id'] -%></SvnUrlAppendTenantId>
    <%- end -%>
     </DeploymentSynchronizer>
+<%- else -%>
+    <DeploymentSynchronizer>
+        <Enabled>false</Enabled>
+        <AutoCommit>false</AutoCommit>
+        <AutoCheckout>true</AutoCheckout>
+        <RepositoryType>svn</RepositoryType>
+        <SvnUrl>http://svnrepo.example.com/repos/</SvnUrl>
+        <SvnUser>username</SvnUser>
+        <SvnPassword>password</SvnPassword>
+        <SvnUrlAppendTenantId>true</SvnUrlAppendTenantId>
+    </DeploymentSynchronizer>
 <%- end -%>
     <!-- Deployment Synchronizer Configuration. Uncomment the following section when running with "registry based" dep sync.
         In master nodes you need to set both AutoCommit and AutoCheckout to true
