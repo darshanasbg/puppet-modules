@@ -23,11 +23,27 @@ wso2::template_list :
 wso2::service_name: wso2am
 wso2::mgt_hostname : am.wso2.com
 
-wso2::keymanager :
+wso2::apim_gateway :
+    host : am.wso2.com
+    port : 9443
+    api_endpoint_port : 8280
+    secure_api_endpoint_port : 8243
+    username : admin
+    password : admin
+
+wso2::apim_keymanager :
     host : am.wso2.com
     port : 9443
     username : admin
     password : admin
+
+wso2::apim_store :
+    host : am.wso2.com
+    port : 9443
+
+wso2::apim_publisher :
+    host : am.wso2.com
+    port : 9443
 
 wso2::domain : wso2.com
 wso2::am_subdomain : am
