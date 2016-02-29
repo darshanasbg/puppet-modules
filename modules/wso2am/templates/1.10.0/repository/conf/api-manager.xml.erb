@@ -184,19 +184,36 @@
                         <!--
                                 Server URL of the API gateway.
                         -->
-                        <ServerURL>https://<%= @gatewaymgt_subdomain %>.<%= @domain %>/services/</ServerURL>
+                    <%- if @apim_gateway and @apim_gateway['host'] and @apim_gateway['port']-%>
+                      <ServerURL>https://<%= @apim_gateway['host'] %>:<%= @apim_gateway['port'] %>/services/</ServerURL>
+                    <%- else -%>
+                      <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+                    <%- end -%>
 			<!--
             			Admin username for the API gateway.
         		-->
-                        <Username><%= @admin_username %></Username>
+                    <%- if @apim_gateway and @apim_keymanager['username'] -%>
+                      <Username><%= @apim_gateway['username'] %></Username>
+                    <%- else -%>
+                      <Username>${admin.username}</Username>
+                    <%- end -%>
 			<!--
             			Admin password for the API gateway.
         		-->
-                        <Password><%= @admin_password %></Password>
+                    <%- if @apim_gateway and @apim_gateway['password'] -%>
+                      <Password><%= @apim_gateway['password'] %></Password>
+                    <%- else -%>
+                       <Password>${admin.password}</Password>
+                    <%- end -%>
 			<!--
             			Endpoint URLs for the APIs hosted in this API gateway.
         		-->
-                        <GatewayEndpoint>http://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_http_port %>,https://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %></GatewayEndpoint>
+                    <%- if @apim_gateway and @apim_gateway['host'] and
+        		        @apim_gateway['api_endpoint_port'] and  @apim_gateway['secure_api_endpoint_port']-%>
+                      <GatewayEndpoint>http://<%= @apim_gateway['host'] %>:<%= @apim_gateway['api_endpoint_port'] %>,https://<%= @apim_gateway['host'] %>:<%= @apim_gateway['secure_api_endpoint_port'] %></GatewayEndpoint>
+                    <%- else -%>
+                      <GatewayEndpoint>http://${carbon.local.ip}:${http.nio.port},https://${carbon.local.ip}:${https.nio.port}</GatewayEndpoint>
+                    <%- end -%>
                 </Environment>
         </Environments>
 
