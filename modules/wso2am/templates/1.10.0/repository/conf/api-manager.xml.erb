@@ -66,15 +66,29 @@
         <!--
             Server URL of the Authentication service
         -->
-        <ServerURL>https://<%= @keymanager_subdomain %>.<%= @domain %>/services/</ServerURL>
+        <%- if @apim_keymanager and @apim_keymanager['host'] and @apim_keymanager['port'] -%>
+          <ServerURL>https://<%= @apim_keymanager['host'] %>:<%= @apim_keymanager['port'] %>/services/</ServerURL>
+        <%- else -%>
+           <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+        <%- end -%>        
+        
         <!--
             Admin username for the Authentication manager.
         -->
-        <Username><%= @admin_username %></Username>
+        <%- if @apim_keymanager and @apim_keymanager['username'] -%>
+          <Username><%= @apim_keymanager['username'] %></Username>
+        <%- else -%>
+          <Username>${admin.username}</Username>
+        <%- end -%>
         <!--
             Admin password for the Authentication manager.
         -->
-        <Password><%= @admin_password %></Password>
+
+        <%- if @apim_keymanager and @apim_keymanager['password'] -%>
+          <Password><%= @apim_keymanager['password'] %></Password>
+        <%- else -%>
+          <Password>${admin.password}</Password>
+        <%- end -%>
 	<!-- 
 	   Indicates whether the permissions checking of the user (on the Publisher and Store) should be done
 	   via a remote service. The check will be done on the local server when false.	
