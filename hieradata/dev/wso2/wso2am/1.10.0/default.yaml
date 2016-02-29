@@ -109,3 +109,11 @@ wso2::master_datasources :
 wso2::datasources::common::h2username : 'wso2carbon'
 wso2::datasources::common::h2password : 'wso2carbon'
 
+wso2::third_party_keymanager :
+  enabled : true
+  client_impl : org.wso2.carbon.apimgt.sciquest.keymanager.APIManagerOAuthClient
+  intropection_url : http://127.0.0.1:8080/v1/tokeninfo
+  token_url : http://localhost:8080/oauth2/token
+  consumer_key : 6b4d6f28-3375-488d-8afa-9187f2c4241f
+  consumer_secret_key : 422dfb59-f0c5-452c-849e-576045a7d96f
+

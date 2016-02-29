@@ -403,7 +403,18 @@
     Uncomment this section only if you are going to have an instance other than KeyValidator as your KeyManager.
     Unless a ThirdParty KeyManager is used, you don't need to configure this section.
     -->
-    
+
+    <%- if @third_party_keymanager['enabled'] -%>
+        <APIKeyManager>
+            <KeyManagerClientImpl><%= @third_party_keymanager['client_impl'] -%></KeyManagerClientImpl>
+            <Configuration>
+                <IntrospectionURL><%= @third_party_keymanager['intropection_url'] -%></IntrospectionURL>
+                <TokenURL><%= @third_party_keymanager['token_url'] -%></TokenURL>
+                <ConsumerKey><%= @third_party_keymanager['consumer_key'] -%></ConsumerKey>
+                <ConsumerSecret><%= @third_party_keymanager['consumer_secret_key'] -%></ConsumerSecret>
+            </Configuration>
+        </APIKeyManager>
+    <%- else -%>
     <!--APIKeyManager>
         <KeyManagerClientImpl>org.wso2.carbon.apimgt.keymgt.AMDefaultKeyManagerImpl</KeyManagerClientImpl>
         <Configuration>
@@ -414,6 +425,7 @@
             <RevokeURL>https://${carbon.local.ip}:${https.nio.port}/revoke</RevokeURL>
         </Configuration>
     </APIKeyManager-->
+    <%- end -%>
 
     <!--
         Settings related to managing API access tiers.
