@@ -204,19 +204,36 @@
                         <!--
                                 Server URL of the API gateway.
                         -->
-                        <ServerURL>https://<%= @gatewaymgt_subdomain %>.<%= @domain %>/services/</ServerURL>
+                    <%- if @apim_gateway and @apim_gateway['host'] and @apim_gateway['port']-%>
+                      <ServerURL>https://<%= @apim_gateway['host'] %>:<%= @apim_gateway['port'] %>/services/</ServerURL>
+                    <%- else -%>
+                      <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+                    <%- end -%>
 			<!--
             			Admin username for the API gateway.
         		-->
-                        <Username><%= @admin_username %></Username>
+                    <%- if @apim_gateway and @apim_keymanager['username'] -%>
+                      <Username><%= @apim_gateway['username'] %></Username>
+                    <%- else -%>
+                      <Username>${admin.username}</Username>
+                    <%- end -%>
 			<!--
             			Admin password for the API gateway.
         		-->
-                        <Password><%= @admin_password %></Password>
+                    <%- if @apim_gateway and @apim_gateway['password'] -%>
+                      <Password><%= @apim_gateway['password'] %></Password>
+                    <%- else -%>
+                       <Password>${admin.password}</Password>
+                    <%- end -%>
 			<!--
             			Endpoint URLs for the APIs hosted in this API gateway.
         		-->
-                        <GatewayEndpoint>http://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_http_port %>,https://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %></GatewayEndpoint>
+                    <%- if @apim_gateway and @apim_gateway['host'] and
+        		        @apim_gateway['api_endpoint_port'] and  @apim_gateway['secure_api_endpoint_port']-%>
+                      <GatewayEndpoint>http://<%= @apim_gateway['host'] %>:<%= @apim_gateway['api_endpoint_port'] %>,https://<%= @apim_gateway['host'] %>:<%= @apim_gateway['secure_api_endpoint_port'] %></GatewayEndpoint>
+                    <%- else -%>
+                      <GatewayEndpoint>http://${carbon.local.ip}:${http.nio.port},https://${carbon.local.ip}:${https.nio.port}</GatewayEndpoint>
+                    <%- end -%>
                 </Environment>
         </Environments>
 
@@ -349,17 +366,29 @@
         <!--
             Server URL of the API key manager
         -->
-        <ServerURL>https://<%= @keymanager_subdomain %>.<%= @domain %>/services/</ServerURL>
+        <%- if @apim_keymanager and @apim_keymanager['host'] and @apim_keymanager['port'] -%>
+          <ServerURL>https://<%= @apim_keymanager['host'] %>:<%= @apim_keymanager['port'] %>/services/</ServerURL>
+        <%- else -%>
+           <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+        <%- end -%>
 
         <!--
             Admin username for API key manager.
         -->
-        <Username><%= @admin_username %></Username>
+        <%- if @apim_keymanager and @apim_keymanager['username'] -%>
+          <Username><%= @apim_keymanager['username'] %></Username>
+        <%- else -%>
+          <Username>${admin.username}</Username>
+        <%- end -%>
 
         <!--
             Admin password for API key manager.
         -->
-        <Password><%= @admin_password %></Password>
+        <%- if @apim_keymanager and @apim_keymanager['password'] -%>
+          <Password><%= @apim_keymanager['password'] %></Password>
+        <%- else -%>
+          <Password>${admin.password}</Password>
+        <%- end -%>
         <!--
             Enable/Disable JWT caching.
         -->
@@ -426,7 +455,11 @@
 	     gateway https( /http, we recommend users to use 'https' endpoints for security purpose) url.
          Also please note that we should point gateway revoke service to key manager
 	-->
-	<RevokeAPIURL>https://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %>/revoke</RevokeAPIURL>
+	<%- if @apim_gateway and @apim_gateway['host'] and @apim_gateway['api_endpoint_port'] and  @apim_gateway['secure_api_endpoint_port']-%>
+	<RevokeAPIURL>https://<%= @apim_gateway['host'] %>:<%= @apim_gateway['secure_api_endpoint_port'] %>/revoke</RevokeAPIURL>
+	<%- else -%>
+	<RevokeAPIURL>https://${carbon.local.ip}:${https.nio.port}/revoke</RevokeAPIURL>
+	<%- end -%>
 
 	<!-- Whether to encrypt tokens when storing in the Database
 	Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to
@@ -484,7 +517,11 @@
 	<!--GroupingExtractor>org.wso2.carbon.apimgt.impl.DefaultGroupIDExtractorImpl</GroupingExtractor-->
 	<CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://<%= @am_subdomain %>.<%= @domain %>/store</URL>
+        <%- if @apim_store and @apim_store['host'] and @apim_store['port'] -%>
+          <URL>https://<%= @apim_store['host'] %>:<%= @apim_store['port'] %>/store</URL>
+        <%- else -%>
+           <URL>https://${carbon.local.ip}:${mgt.transport.https.port}/store</URL>
+        <%- end -%>
         <!--
             Server URL of the API Store.
         -->
@@ -548,7 +585,11 @@
 
     <APIPublisher>
         <DisplayURL>false</DisplayURL>
-        <URL>https://<%= @am_subdomain %>.<%= @domain %>/publisher</URL>
+        <%- if @apim_publisher and @apim_publisher['host'] and @apim_publisher['port'] -%>
+          <URL>https://<%= @apim_publisher['host'] %>:<%= @apim_publisher['port'] %>/publisher</URL>
+        <%- else -%>
+          <URL>https://${carbon.local.ip}:${mgt.transport.https.port}/publisher</URL>
+        <%- end -%>
         <!-- 
                This parameter specifies enabling the capability of setting API documentation level granular visibility levels.
                By default any document associate with an API will have the same permissions set as the API.With enabling below
