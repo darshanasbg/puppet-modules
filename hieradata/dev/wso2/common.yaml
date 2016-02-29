@@ -68,6 +68,7 @@ wso2::template_list :
 wso2::file_list :
   - repository/components/lib/mysql-connector-java-5.1.38-bin.jar
   - repository/components/lib/trilead-ssh2-1.0.0-build215.jar
+  - repository/components/lib/svnkit-all-1.8.7.wso2v1.jar
 
 
 # JVM settings
