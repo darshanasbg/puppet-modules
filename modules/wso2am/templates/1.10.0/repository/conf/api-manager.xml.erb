@@ -75,12 +75,11 @@
             Admin password for the Authentication manager.
         -->
         <Password><%= @admin_password %></Password>
-
-        <!--
-	        Indicates whether the permissions checking of the user (on the Publisher and Store) should be done
-	        via a remote service. The check will be done on the local server when false.
-	    -->
-	    <CheckPermissionsRemotely>false</CheckPermissionsRemotely>
+	<!-- 
+	   Indicates whether the permissions checking of the user (on the Publisher and Store) should be done
+	   via a remote service. The check will be done on the local server when false.	
+	-->
+	<CheckPermissionsRemotely>false</CheckPermissionsRemotely>
     </AuthManager>
 
     <!--
@@ -125,7 +124,7 @@
 	 -->
 	<TokenGeneratorImpl>org.wso2.carbon.apimgt.impl.token.JWTGenerator</TokenGeneratorImpl>
 
-        <!--
+         <!--
             This parameter specifies which implementation should be used for generating the Token. For URL safe JWT
         Token generation the implementation is provided in URLSafeJWTGenerator
         -->
@@ -168,9 +167,9 @@
                 <Environment type="hybrid" api-console="true">
                         <Name>Production and Sandbox</Name>
                     <Description> Description of environment</Description>
-			<!--
-            			Server URL of the API gateway.
-        		-->
+                        <!--
+                                Server URL of the API gateway.
+                        -->
                         <ServerURL>https://<%= @gatewaymgt_subdomain %>.<%= @am_subdomain %>.<%= @domain %>/services/</ServerURL>
 			<!--
             			Admin username for the API gateway.
@@ -270,7 +269,7 @@
         <PublisherClass>org.wso2.carbon.apimgt.usage.publisher.APIMgtUsageDataBridgeDataPublisher</PublisherClass>
 
         <!--
-            If below property set to true,then the response message size will be calculated and publish
+            If below property set to true,then the response message size will be calculated and publish 
             with each successful API invocation event.
         -->
         <PublishResponseMessageSize>false</PublishResponseMessageSize>
@@ -328,6 +327,11 @@
         -->
         <Password><%= @admin_password %></Password>
         <!--
+            Enable/Disable JWT caching.
+        -->
+        <EnableJWTCache>false</EnableJWTCache>
+
+        <!--
             Enable/Disable API key validation information caching at key-management server
         -->
 
@@ -344,20 +348,17 @@
 	-Gateway use this parameter to connect key validation thrift service. 
         -->
 
-	<%- if @clustering -%>
+        <%- if @clustering -%>
         <KeyValidatorClientType>WSClient</KeyValidatorClientType>
+        <EnableThriftServer>false</EnableThriftServer>
         <%- else -%>
         <KeyValidatorClientType>ThriftClient</KeyValidatorClientType>
+        <ThriftServerHost><%= @ipaddress %></ThriftServerHost>
+        <EnableThriftServer>true</EnableThriftServer>
         <%- end -%>
         <ThriftClientPort>10397</ThriftClientPort>
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
-        <ThriftServerPort>10397</ThriftServerPort>
-	<!--ThriftServerHost>localhost</ThriftServerHost-->
-	<%- if @clustering -%>
-        <EnableThriftServer>false</EnableThriftServer>
-        <%- else -%>
-        <EnableThriftServer>true</EnableThriftServer>
-        <%- end -%>
+        <ThriftServerPort>10397</ThriftServerPort>        
 
         <!-- 
         Scope used for marking Application Tokens. If a token is generated with this scope, they will be treated as Application Access Tokens
@@ -381,6 +382,7 @@
             <Scope>^device_.*</Scope>
             <Scope>openid</Scope>
         </ScopeWhitelist-->
+    
 	<!-- Name of the token API -->
 	<TokenEndPointName>/oauth2/token</TokenEndPointName>
 
@@ -437,20 +439,20 @@
 	<CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
         <URL>https://<%= @am_subdomain %>.<%= @domain %>/store</URL>
-
         <!--
             Server URL of the API Store.
         -->
-        <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+
+        <ServerURL>https://<%= @am_subdomain %>.<%= @domain %>/services/</ServerURL>
         <!--
             Admin username for API Store.
         -->
-        <Username><%= @admin_username %></Username>
+        <Username>admin</Username>
 
         <!--
             Admin password for API Store.
         -->
-        <Password><%= @admin_password %></Password>
+        <Password>admin</Password>
         <!--
             This parameter specifies whether to display multiple versions of same
             API or only showing the latest version of an API.
@@ -501,7 +503,7 @@
     <APIPublisher>
         <DisplayURL>false</DisplayURL>
         <URL>https://<%= @am_subdomain %>.<%= @domain %>/publisher</URL>
-        <!--
+        <!-- 
                This parameter specifies enabling the capability of setting API documentation level granular visibility levels.
                By default any document associate with an API will have the same permissions set as the API.With enabling below
                property,it will show two additional permission levels as visible only to all registered users in a particular
@@ -586,8 +588,8 @@
 
 	<!--Configure Access-Control-Allow-Headers-->
 	<Access-Control-Allow-Headers>authorization,Access-Control-Allow-Origin,Content-Type</Access-Control-Allow-Headers>
-
-    <!--Configure Access-Control-Allow-Credentials-->
+        
+            <!--Configure Access-Control-Allow-Credentials-->
     <!-- Specifying this header to true means that the server allows cookies (or other user credentials) to be included on cross-origin requests.
          It is false by default and if you set it to true then make sure that the Access-Control-Allow-Origin header does not contain the wildcard (*)
     -->
