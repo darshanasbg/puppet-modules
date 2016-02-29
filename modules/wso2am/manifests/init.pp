@@ -20,6 +20,7 @@
 
 class wso2am inherits wso2base {
   $am_datasources     = hiera_hash("wso2::am_datasources")
+  $map_existing_auth_apps = hiera("wso2::map_existing_auth_apps")
 
   wso2base::server { "${carbon_home}" :
     maintenance_mode   => $maintenance_mode,

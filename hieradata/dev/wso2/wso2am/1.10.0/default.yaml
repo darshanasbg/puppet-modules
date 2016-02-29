@@ -105,3 +105,6 @@ wso2::third_party_keymanager :
   consumer_key : 6b4d6f28-3375-488d-8afa-9187f2c4241f
   consumer_secret_key : 422dfb59-f0c5-452c-849e-576045a7d96f
 
+wso2::map_existing_auth_apps  :
+  enabled : true
+
