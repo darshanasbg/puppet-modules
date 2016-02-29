@@ -60,6 +60,7 @@ wso2::template_list :
   - repository/conf/tomcat/catalina-server.xml
   - repository/conf/axis2/axis2.xml
   - bin/wso2server.sh
+  - repository/deployment/server/jaggeryapps/store/site/conf/site.json
 
 # File list to be copied to the server
 ## wso2::file_list : []
