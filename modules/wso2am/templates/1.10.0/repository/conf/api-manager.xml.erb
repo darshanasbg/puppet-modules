@@ -136,7 +136,7 @@
             This parameter specifies which implementation should be used for generating the Token. JWTGenerator is the
 	    default implementation provided.
 	 -->
-	<TokenGeneratorImpl>org.wso2.carbon.apimgt.impl.token.JWTGenerator</TokenGeneratorImpl>
+	<TokenGeneratorImpl><%= @jwt_token_generator_impl %></TokenGeneratorImpl>
 
          <!--
             This parameter specifies which implementation should be used for generating the Token. For URL safe JWT

@@ -114,3 +114,4 @@ wso2::third_party_keymanager :
 wso2::map_existing_auth_apps  :
   enabled : true
 
+wso2::jwt_token_generator_impl :  org.wso2.carbon.apimgt.sciquest.jwt.claims.CustomJWTGenerator
