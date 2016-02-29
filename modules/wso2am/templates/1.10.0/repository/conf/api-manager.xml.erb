@@ -66,8 +66,8 @@
         <!--
             Server URL of the Authentication service
         -->
-        <%- if @apim_keymanager and @apim_keymanager['host'] and @apim_keymanager['port'] -%>
-          <ServerURL>https://<%= @apim_keymanager['host'] %>:<%= @apim_keymanager['port'] %>/services/</ServerURL>
+        <%- if @keymanager and @keymanager['host'] and @keymanager['port'] -%>
+          <ServerURL>https://<%= @keymanager['host'] %>:<%= @keymanager['port'] %>/services/</ServerURL>
         <%- else -%>
            <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
         <%- end -%>        
@@ -75,8 +75,8 @@
         <!--
             Admin username for the Authentication manager.
         -->
-        <%- if @apim_keymanager and @apim_keymanager['username'] -%>
-          <Username><%= @apim_keymanager['username'] %></Username>
+        <%- if @keymanager and @keymanager['username'] -%>
+          <Username><%= @keymanager['username'] %></Username>
         <%- else -%>
           <Username>${admin.username}</Username>
         <%- end -%>
@@ -84,8 +84,8 @@
             Admin password for the Authentication manager.
         -->
 
-        <%- if @apim_keymanager and @apim_keymanager['password'] -%>
-          <Password><%= @apim_keymanager['password'] %></Password>
+        <%- if @keymanager and @keymanager['password'] -%>
+          <Password><%= @keymanager['password'] %></Password>
         <%- else -%>
           <Password>${admin.password}</Password>
         <%- end -%>
