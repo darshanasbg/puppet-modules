@@ -23,6 +23,12 @@ wso2::template_list :
 wso2::service_name: wso2am
 wso2::mgt_hostname : am.wso2.com
 
+wso2::keymanager :
+    host : am.wso2.com
+    port : 9443
+    username : admin
+    password : admin
+
 wso2::domain : wso2.com
 wso2::am_subdomain : am
 wso2::keymanager_subdomain : am
