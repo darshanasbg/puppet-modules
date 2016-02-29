@@ -66,7 +66,7 @@
         <!--
             Server URL of the Authentication service
         -->
-        <ServerURL>https://<%= @keymanager_subdomain %>.<%= @am_subdomain %>.<%= @domain %>/services/</ServerURL>
+        <ServerURL>https://<%= @keymanager_subdomain %>.<%= @domain %>/services/</ServerURL>
         <!--
             Admin username for the Authentication manager.
         -->
@@ -170,7 +170,7 @@
                         <!--
                                 Server URL of the API gateway.
                         -->
-                        <ServerURL>https://<%= @gatewaymgt_subdomain %>.<%= @am_subdomain %>.<%= @domain %>/services/</ServerURL>
+                        <ServerURL>https://<%= @gatewaymgt_subdomain %>.<%= @domain %>/services/</ServerURL>
 			<!--
             			Admin username for the API gateway.
         		-->
@@ -182,7 +182,7 @@
 			<!--
             			Endpoint URLs for the APIs hosted in this API gateway.
         		-->
-                        <GatewayEndpoint>http://<%= @gateway_subdomain %>.<%= @am_subdomain %>.<%= @domain %>:<%= @am_nio_http_port %>,https://<%= @gateway_subdomain %>.<%= @am_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %></GatewayEndpoint>
+                        <GatewayEndpoint>http://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_http_port %>,https://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %></GatewayEndpoint>
                 </Environment>
         </Environments>
 
@@ -315,7 +315,7 @@
         <!--
             Server URL of the API key manager
         -->
-        <ServerURL>https://<%= @keymanager_subdomain %>.<%= @am_subdomain %>.<%= @domain %>/services/</ServerURL>
+        <ServerURL>https://<%= @keymanager_subdomain %>.<%= @domain %>/services/</ServerURL>
 
         <!--
             Admin username for API key manager.
@@ -392,7 +392,7 @@
 	     gateway https( /http, we recommend users to use 'https' endpoints for security purpose) url.
          Also please note that we should point gateway revoke service to key manager
 	-->
-	<RevokeAPIURL>https://<%= @gateway_subdomain %>.<%= @am_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %>/revoke</RevokeAPIURL>
+	<RevokeAPIURL>https://<%= @gateway_subdomain %>.<%= @domain %>:<%= @am_nio_https_port %>/revoke</RevokeAPIURL>
 
 	<!-- Whether to encrypt tokens when storing in the Database
 	Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to

@@ -23,28 +23,20 @@ wso2::template_list :
 wso2::service_name: wso2am
 wso2::mgt_hostname : am.wso2.com
 
-wso2::apim_gateway :
-    host : am.wso2.com
-    port : 9443
-    api_endpoint_port : 8280
+wso2::domain : wso2.com
+wso2::am_subdomain : am
+wso2::keymanager_subdomain : am
+wso2::gatewaymgt_subdomain : am
+
+wso2::am_nio_http_port : 8280
+wso2::am_nio_https_port : 8243 
+
+wso2::admin_username : admin
+wso2::admin_password : admin
+
     secure_api_endpoint_port : 8243
     username : admin
     password : admin
-
-wso2::apim_keymanager :
-    host : am.wso2.com
-    port : 9443
-    username : admin
-    password : admin
-
-wso2::apim_store :
-    host : am.wso2.com
-    port : 9443
-
-wso2::apim_publisher :
-    host : am.wso2.com
-    port : 9443
-
 
 # Clustering configuration
 wso2::clustering :
