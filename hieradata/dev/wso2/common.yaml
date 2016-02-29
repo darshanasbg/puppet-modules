@@ -28,7 +28,7 @@ wso2::hosts_mapping :
     hostname : localhost
   qaa-node1 :
     ip_address : 127.0.0.1
-    hostname : qaa-node-1
+    hostname : osboxes
   apimgtdb :
     ip_address : 127.0.0.1
     hostname : apimgtdb.mysql-wso2.com
