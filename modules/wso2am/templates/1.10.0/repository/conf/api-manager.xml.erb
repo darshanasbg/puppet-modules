@@ -497,7 +497,11 @@
 	<!--GroupingExtractor>org.wso2.carbon.apimgt.impl.DefaultGroupIDExtractorImpl</GroupingExtractor-->
 	<CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://<%= @am_subdomain %>.<%= @domain %>/store</URL>
+        <%- if @apim_store and @apim_store['host'] and @apim_store['port'] -%>
+          <URL>https://<%= @apim_store['host'] %>:<%= @apim_store['port'] %>/store</URL>
+        <%- else -%>
+           <URL>https://${carbon.local.ip}:${mgt.transport.https.port}/store</URL>
+        <%- end -%>
         <!--
             Server URL of the API Store.
         -->
@@ -561,7 +565,11 @@
 
     <APIPublisher>
         <DisplayURL>false</DisplayURL>
-        <URL>https://<%= @am_subdomain %>.<%= @domain %>/publisher</URL>
+        <%- if @apim_publisher and @apim_publisher['host'] and @apim_publisher['port'] -%>
+          <URL>https://<%= @apim_publisher['host'] %>:<%= @apim_publisher['port'] %>/publisher</URL>
+        <%- else -%>
+          <URL>https://${carbon.local.ip}:${mgt.transport.https.port}/publisher</URL>
+        <%- end -%>
         <!-- 
                This parameter specifies enabling the capability of setting API documentation level granular visibility levels.
                By default any document associate with an API will have the same permissions set as the API.With enabling below
