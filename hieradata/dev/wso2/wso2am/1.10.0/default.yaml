@@ -34,10 +34,6 @@ wso2::am_nio_https_port : 8243
 wso2::admin_username : admin
 wso2::admin_password : admin
 
-    secure_api_endpoint_port : 8243
-    username : admin
-    password : admin
-
 # Clustering configuration
 wso2::clustering :
     enabled : true
