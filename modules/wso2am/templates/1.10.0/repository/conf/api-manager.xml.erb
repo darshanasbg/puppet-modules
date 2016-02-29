@@ -526,7 +526,11 @@
             Server URL of the API Store.
         -->
 
-        <ServerURL>https://<%= @am_subdomain %>.<%= @domain %>/services/</ServerURL>
+        <%- if @apim_store and @apim_store['host'] and @apim_store['port'] -%>
+          <ServerURL>https://<%= @apim_store['host'] %>:<%= @apim_store['port'] %>/services/</ServerURL>
+        <%- else -%>
+           <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+        <%- end -%>
         <!--
             Admin username for API Store.
         -->
