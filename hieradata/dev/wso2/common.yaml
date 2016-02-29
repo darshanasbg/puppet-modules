@@ -25,7 +25,7 @@ wso2::pack_dir : /mnt/packs
 wso2::hosts_mapping :
   localhost :
     ip_address : 127.0.0.1
-    hostname : localhost
+    hostname : localhost am.wso2.com
   qaa-node1 :
     ip_address : 127.0.0.1
     hostname : osboxes
