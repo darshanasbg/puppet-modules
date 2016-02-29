@@ -66,6 +66,11 @@ wso2::clustering :
     k8s :
     ppaas :
 
+wso2::file_list :
+  - repository/components/lib/oauth-app-registration-1.0.0.jar
+  - repository/components/lib/jwt-custom-claims-1.0.0.jar
+  - repository/components/lib/gateway.client-1.0.0.jar
+
 #wso2::am_datasources : []
 
 wso2::master_datasources :
