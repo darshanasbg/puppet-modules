@@ -61,6 +61,7 @@ wso2::template_list :
   - repository/conf/axis2/axis2.xml
   - bin/wso2server.sh
   - repository/deployment/server/jaggeryapps/store/site/conf/site.json
+  - repository/deployment/server/synapse-configs/default/api/_TokenAPI_.xml
 
 # File list to be copied to the server
 ## wso2::file_list : []
