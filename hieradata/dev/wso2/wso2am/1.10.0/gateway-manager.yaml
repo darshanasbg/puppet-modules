@@ -1,4 +1,4 @@
-# Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+﻿# Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,40 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-wso2::hostname : publisher.am.wso2.com
-wso2::mgt_hostname : publisher.am.wso2.com
-
-wso2::apim_gateway :
-    host : wso2am-gateway-manager
+wso2::hostname : gw.am.wso2.com
+wso2::mgt_hostname : gw.am.wso2.com
 
 wso2::apim_keymanager :
     host : wso2am-api-key-manager
 
-wso2::apim_store :
-    host : wso2am-api-store
-
 wso2::clustering :
     enabled : true
-    domain : wso2.pub.store.am.domain
+    domain : wso2.gw.am.domain
     sub_domain : mgt
-    local_member_host : local.publisher.am.wso2.com
+    local_member_host : local.gw.am.wso2.com
     local_member_port : 4000
     membership_scheme : kubernetes
     k8 :
        k8_master : http://172.17.8.101:8080
        k8_namespace : default
-       k8_services : wso2am-api-publisher,wso2am-api-store
+       k8_services : wso2am-gateway-manager
        k8_master_username :
        k8_master_password :
 
-wso2::ports:
-  proxyPort :
-    http : 32012
-    https : 32013
 
 
 
-
+# Datasource configs
 wso2::master_datasources :
   wso2user_db :
     name : WSO2UM_DB
@@ -67,3 +57,17 @@ wso2::master_datasources :
 # User management configurations
 # User management datasource change to user db
 wso2::usermgt_datasource: wso2user_db
+
+
+########## Configs needed for local testing ############
+# Deployment synchronization configuration
+wso2::dep_sync :
+    enabled : false
+    auto_checkout : true
+    auto_commit : true
+    repository_type : svn
+    svn :
+       url : https://svn.wso2.com/wso2/interns/2013/abimaran/clustering/-1234/
+       user : abimaran@wso2.com
+       password : password
+       append_tenant_id: true
