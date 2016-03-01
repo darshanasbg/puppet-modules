@@ -19,26 +19,76 @@
 <UserManager>
     <Realm>
         <Configuration>
-		<AddAdmin>true</AddAdmin>
+            <%- if @usermgt and @usermgt['add_admin_user'] -%>
+            <AddAdmin><%= @usermgt['add_admin_user'] %></AddAdmin>
+            <%- else -%>
+            <AddAdmin>true</AddAdmin>
+            <%- end -%>
             <AdminRole>admin</AdminRole>
             <AdminUser>
+                <%- if @usermgt and @usermgt['admin_username'] -%>
+                <UserName><%= @usermgt['admin_username'] %></UserName>
+                <%- else -%>
                 <UserName>admin</UserName>
+                <%- end -%>
+                <%- if @usermgt and @usermgt['admin_password'] -%>
+                <Password><%= @usermgt['admin_password'] %></Password>
+                <%- else -%>
                 <Password>admin</Password>
+                <%- end -%>
             </AdminUser>
             <EveryOneRoleName>everyone</EveryOneRoleName> <!-- By default users in this role sees the registry root -->
             <Property name="isCascadeDeleteEnabled">true</Property>
             <Property name="dataSource"><%= @master_datasources[@usermgt_datasource]['jndi_config'] %></Property>
         </Configuration>
 
-	    <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
-	         In case if application needs to manage passwords externally set property
-	         <Property name="PasswordsExternallyManaged">true</Property>.
-	         In case if user core cache domain is needed to identify uniquely set property
-	         <Property name="UserCoreCacheIdentifier">domain</Property>.
-	         Furthermore properties, IsEmailUserName and DomainCalculation are readonly properties.
-	         Note: Do not comment within UserStoreManager tags. Cause, specific tag names are used as tokens
-	         when building configurations for products.
-	    -->
+        <%- if @usermgt and @usermgt['type'] and @usermgt['type'] == 'ldap' -%>
+	    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
+		     In case if user core cache domain is needed to identify uniquely set property
+		     <Property name="UserCoreCacheIdentifier">domain</Property>
+ 	    -->
+        <UserStoreManager class="org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager">
+            <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
+            <Property name="ConnectionURL"><%= @usermgt['connection_url'] %></Property>
+            <Property name="ConnectionName"><%= @usermgt['connection_name'] %></Property>
+            <Property name="ConnectionPassword"><%= @usermgt['connection_password'] %></Property>
+            <Property name="UserSearchBase"><%= @usermgt['user_search_base'] %></Property>
+            <Property name="UserNameAttribute">uid</Property>
+            <Property name="UserNameSearchFilter">(&amp;(objectClass=person)(uid=?))</Property>
+            <Property name="UserNameListFilter">(objectClass=person)</Property>
+            <Property name="DisplayNameAttribute"/>
+            <Property name="ReadGroups">true</Property>
+            <Property name="GroupSearchBase"><%= @usermgt['group_search_base'] %></Property>
+            <Property name="GroupNameAttribute">cn</Property>
+            <Property name="GroupNameSearchFilter">(&amp;(objectClass=groupOfNames)(cn=?))</Property>
+            <Property name="GroupNameListFilter">(objectClass=groupOfNames)</Property>
+            <Property name="MembershipAttribute">member</Property>
+            <Property name="BackLinksEnabled">false</Property>
+            <Property name="UsernameJavaRegEx">[a-zA-Z0-9._-|//]{3,30}$</Property>
+            <Property name="PasswordJavaRegEx">^[\S]{5,30}$</Property>
+            <Property name="RolenameJavaRegEx">[a-zA-Z0-9._-|//]{3,30}$</Property>
+            <Property name="SCIMEnabled">false</Property>
+            <Property name="PasswordHashMethod">PLAIN_TEXT</Property>
+            <Property name="MultiAttributeSeparator">,</Property>
+            <Property name="MaxUserNameListLength">100</Property>
+            <Property name="MaxRoleNameListLength">100</Property>
+            <Property name="UserRolesCacheEnabled">true</Property>
+            <Property name="ConnectionPoolingEnabled">true</Property>
+            <Property name="LDAPConnectionTimeout">5000</Property>
+            <Property name="ReadTimeout"/>
+            <Property name="RetryAttempts"/>
+            <Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
+        </UserStoreManager>
+        <%- else -%>
+            <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
+                 In case if application needs to manage passwords externally set property
+                 <Property name="PasswordsExternallyManaged">true</Property>.
+                 In case if user core cache domain is needed to identify uniquely set property
+                 <Property name="UserCoreCacheIdentifier">domain</Property>.
+                 Furthermore properties, IsEmailUserName and DomainCalculation are readonly properties.
+                 Note: Do not comment within UserStoreManager tags. Cause, specific tag names are used as tokens
+                 when building configurations for products.
+            -->
         <UserStoreManager class="org.wso2.carbon.user.core.jdbc.JDBCUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.JDBCTenantManager</Property>
             <Property name="ReadOnly">false</Property>
@@ -63,43 +113,7 @@
             <Property name="UserRolesCacheEnabled">true</Property>
             <Property name="UserNameUniqueAcrossTenants">false</Property>
         </UserStoreManager>
-
-	    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
-		     In case if user core cache domain is needed to identify uniquely set property
-		     <Property name="UserCoreCacheIdentifier">domain</Property>
- 	    -->
-        <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager">
-            <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
-            <Property name="ConnectionURL">ldap://localhost:10389</Property>
-            <Property name="ConnectionName">uid=admin,ou=system</Property>
-            <Property name="ConnectionPassword">admin</Property>
-            <Property name="UserSearchBase">ou=system</Property>
-            <Property name="UserNameAttribute">uid</Property>
-            <Property name="UserNameSearchFilter">(&amp;(objectClass=person)(uid=?))</Property>
-            <Property name="UserNameListFilter">(objectClass=person)</Property>
-            <Property name="DisplayNameAttribute"/>
-            <Property name="ReadGroups">true</Property>
-            <Property name="GroupSearchBase">ou=system</Property>
-            <Property name="GroupNameAttribute">cn</Property>
-            <Property name="GroupNameSearchFilter">(&amp;(objectClass=groupOfNames)(cn=?))</Property>
-            <Property name="GroupNameListFilter">(objectClass=groupOfNames)</Property>
-            <Property name="MembershipAttribute">member</Property>
-            <Property name="BackLinksEnabled">false</Property>
-            <Property name="UsernameJavaRegEx">[a-zA-Z0-9._-|//]{3,30}$</Property>
-            <Property name="PasswordJavaRegEx">^[\S]{5,30}$</Property>
-            <Property name="RolenameJavaRegEx">[a-zA-Z0-9._-|//]{3,30}$</Property>
-            <Property name="SCIMEnabled">false</Property>
-            <Property name="PasswordHashMethod">PLAIN_TEXT</Property>
-            <Property name="MultiAttributeSeparator">,</Property>
-            <Property name="MaxUserNameListLength">100</Property>
-            <Property name="MaxRoleNameListLength">100</Property>
-            <Property name="UserRolesCacheEnabled">true</Property>
-            <Property name="ConnectionPoolingEnabled">true</Property>
-            <Property name="LDAPConnectionTimeout">5000</Property>
-            <Property name="ReadTimeout"/>
-            <Property name="RetryAttempts"/>
-            <Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
-        </UserStoreManager-->
+        <%- end -%>
 
 	    <!-- Active directory configuration is as follows.
 	         In case if user core cache domain is needed to identify uniquely set property

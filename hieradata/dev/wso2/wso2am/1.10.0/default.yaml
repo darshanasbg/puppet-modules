@@ -23,6 +23,17 @@ wso2::template_list :
 wso2::service_name: wso2am
 wso2::mgt_hostname : am.wso2.com
 
+wso2::usermgt :
+    add_admin_user : false
+    admin_username : networkerauth
+    admin_password : REPLACEME
+    type : ldap
+    connection_url : ldap://rhqipa01.sciquest.com:389
+    connection_name : uid=vcenter_ro,cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+    connection_password : REPLACEME
+    user_search_base : cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+    group_search_base : cn=groups,cn=accounts,dc=ipa,dc=sciquest,dc=com
+
 wso2::apim_gateway :
     host : am.wso2.com
     port : 9443
