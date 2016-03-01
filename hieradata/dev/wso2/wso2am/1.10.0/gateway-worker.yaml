@@ -37,6 +37,23 @@ wso2::clustering :
     ppaas :
 
 
+# Registry mounting
+wso2::registry_mounts:
+  wso2_config_db:
+    read_only: true
+
+  wso2_gov_db:
+    read_only: true
+
+
+# User store configs
+wso2::usermgt :
+    add_admin_user : true
+    admin_username : admin
+    admin_password : admin
+    type : jdbc
+
+
 ########## Configs needed for local testing ############
 # Deployment synchronization configuration
 wso2::dep_sync :
