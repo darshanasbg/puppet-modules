@@ -133,9 +133,6 @@ wso2::master_datasources :
     validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
     validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
-# User management datasource defaults to local h2 db
-wso2::usermgt_datasource: wso2_carbon_db
-
 # Common datasources configuration
 wso2::datasources::common::username : 'wso2carbon'
 wso2::datasources::common::password : 'wso2carbon'
@@ -147,3 +144,19 @@ wso2::datasources::common::validation_interval : '30000'
 
 # MySQL datasources configuration
 wso2::datasources::mysql::validation_query : 'SELECT 1'
+
+# User management configurations
+# User management datasource change to user db
+wso2::usermgt_datasource: wso2_carbon_db
+# User store configs
+wso2::usermgt :
+    add_admin_user : true
+    admin_username : admin
+    admin_password : admin
+#    type : ldap
+#    connection_url : ldap://rhqipa01.sciquest.com:389
+#    connection_name : uid=vcenter_ro,cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+#    connection_password : REPLACEME
+#    user_search_base : cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+#    group_search_base : cn=groups,cn=accounts,dc=ipa,dc=sciquest,dc=com
+
