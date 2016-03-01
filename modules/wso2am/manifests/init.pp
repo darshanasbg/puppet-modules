@@ -24,6 +24,7 @@ class wso2am inherits wso2base {
   $apim_keymanager    = hiera_hash ("wso2::apim_keymanager")
   $apim_publisher     = hiera_hash ("wso2::apim_publisher")
   $apim_store         = hiera_hash ("wso2::apim_store")
+  $usermgt            = hiera_hash ("wso2::usermgt")
   $third_party_keymanager = hiera("wso2::third_party_keymanager")
   $map_existing_auth_apps = hiera("wso2::map_existing_auth_apps")
   $jwt_token_generator_impl = hiera("wso2::jwt_token_generator_impl")
