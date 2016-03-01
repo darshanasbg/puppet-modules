@@ -60,15 +60,9 @@ wso2::template_list :
   - repository/conf/tomcat/catalina-server.xml
   - repository/conf/axis2/axis2.xml
   - bin/wso2server.sh
-  - repository/deployment/server/jaggeryapps/store/site/conf/site.json
-  - repository/deployment/server/synapse-configs/default/api/_TokenAPI_.xml
 
 # File list to be copied to the server
-## wso2::file_list : []
-wso2::file_list :
-  - repository/components/lib/mysql-connector-java-5.1.38-bin.jar
-  - repository/components/lib/trilead-ssh2-1.0.0-build215.jar
-  - repository/components/lib/svnkit-all-1.8.7.wso2v1.jar
+wso2::file_list : []
 
 
 # JVM settings
@@ -143,8 +137,8 @@ wso2::master_datasources :
 wso2::usermgt_datasource: wso2_carbon_db
 
 # Common datasources configuration
-wso2::datasources::common::username : 'root'
-wso2::datasources::common::password : 'root'
+wso2::datasources::common::username : 'wso2carbon'
+wso2::datasources::common::password : 'wso2carbon'
 wso2::datasources::common::max_active : '50'
 wso2::datasources::common::max_wait : '60000'
 wso2::datasources::common::default_auto_commit : 'false'

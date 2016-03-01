@@ -12,29 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-wso2::registry_mounts:
-  wso2_config_db:
-    path: /_system/config
-    target_path: /_system/config
-    read_only: false
-    registry_root: /
-    enable_cache: true
-
-  wso2_gov_db:
-    path: /_system/gov
-    target_path: /_system/gov
-    read_only: false
-    registry_root: /
-    enable_cache: true
-
+# Datasource configs
 wso2::master_datasources :
-  wso2am_db:
+  wso2am_db :
     name : WSO2AM_DB
     description : The datasource used for API Manager database
     driver_class_name : com.mysql.jdbc.Driver
     url : jdbc:mysql://apimgtdb.mysql-wso2.com:3306/apimgtdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::username')}"
-    password : "%{hiera('wso2::datasources::common::password')}"
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
     #secret_alias :
     jndi_config : jdbc/WSO2AM_DB
     max_active: "%{hiera('wso2::datasources::common::max_active')}"
@@ -49,8 +35,8 @@ wso2::master_datasources :
     description : The datasource used for local registry
     driver_class_name : org.h2.Driver
     url : jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-    username : "%{hiera('wso2::datasources::common::h2username')}"
-    password : "%{hiera('wso2::datasources::common::h2password')}"
+    username : "%{hiera('wso2::datasources::common::username')}"
+    password : "%{hiera('wso2::datasources::common::password')}"
     #secretAlias :
     jndi_config : jdbc/WSO2CarbonDB
     max_active : "%{hiera('wso2::datasources::common::max_active')}"
@@ -60,13 +46,13 @@ wso2::master_datasources :
     validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
     validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
-  wso2_config_db:
+  wso2_config_db :
     name : WSO2CONFIG_DB
     description : The datasource used for config registry
     driver_class_name : com.mysql.jdbc.Driver
     url : jdbc:mysql://configdb.mysql-wso2.com:3306/configdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::username')}"
-    password : "%{hiera('wso2::datasources::common::password')}"
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
     #secret_alias :
     jndi_config : jdbc/WSO2CONFIG_DB
     max_active: "%{hiera('wso2::datasources::common::max_active')}"
@@ -75,13 +61,13 @@ wso2::master_datasources :
     validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
     validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
 
-  wso2_gov_db:
+  wso2_gov_db :
     name : WSO2GOV_DB
     description : The datasource used for gov registry
     driver_class_name : com.mysql.jdbc.Driver
     url : jdbc:mysql://govdb.mysql-wso2.com:3306/govdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::username')}"
-    password : "%{hiera('wso2::datasources::common::password')}"
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
     #secretAlias :
     jndi_config : jdbc/WSO2GOV_DB
     max_active: "%{hiera('wso2::datasources::common::max_active')}"
@@ -95,8 +81,8 @@ wso2::master_datasources :
     description : The datasource is used for user mangement and userstore
     driver_class_name : com.mysql.jdbc.Driver
     url : jdbc:mysql://userdb.mysql-wso2.com:3306/userdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::username')}"
-    password : "%{hiera('wso2::datasources::common::password')}"
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
     #secretAlias :
     jndi_config : jdbc/WSO2UM_DB
     max_active : "%{hiera('wso2::datasources::common::max_active')}"
@@ -107,10 +93,40 @@ wso2::master_datasources :
     validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
 
+# Registry mounting
+wso2::registry_mounts:
+  wso2_config_db:
+    path: /_system/config
+    target_path: /_system/config/apim
+    read_only: false
+    registry_root: /
+    enable_cache: true
+
+  wso2_gov_db:
+    path: /_system/gov
+    target_path: /_system/gov
+    read_only: false
+    registry_root: /
+    enable_cache: true
+
+
+# User management configurations
 # User management datasource change to user db
 wso2::usermgt_datasource: wso2user_db
+# User store configs
+wso2::usermgt :
+    add_admin_user : false
+    admin_username : networkerauth
+    admin_password : REPLACEME
+    type : ldap
+    connection_url : ldap://rhqipa01.sciquest.com:389
+    connection_name : uid=vcenter_ro,cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+    connection_password : REPLACEME
+    user_search_base : cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+    group_search_base : cn=groups,cn=accounts,dc=ipa,dc=sciquest,dc=com
 
 
+########## Configs needed for local testing ############
 # Deployment synchronization configuration
 wso2::dep_sync :
     enabled : false
