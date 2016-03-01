@@ -112,7 +112,11 @@
 		jwt token, he needs to enable this parameter.
 		The DefaultClaimsRetriever class adds user claims from the default carbon user store.
 	-->
-	<!--ClaimsRetrieverImplClass>org.wso2.carbon.apimgt.impl.token.DefaultClaimsRetriever</ClaimsRetrieverImplClass-->
+	<%- if @jwt_token_generator['enabled'] -%>
+	    <ClaimsRetrieverImplClass>org.wso2.carbon.apimgt.impl.token.DefaultClaimsRetriever</ClaimsRetrieverImplClass>
+	<%- else -%>
+	    <!--ClaimsRetrieverImplClass>org.wso2.carbon.apimgt.impl.token.DefaultClaimsRetriever</ClaimsRetrieverImplClass-->
+	<%- end -%>
 
 	<!--
 		The dialectURI under which the claimURIs that need to be appended to the
@@ -120,23 +124,39 @@
 		same value is used in the keys for appending the default properties to the
 		JWT.
 	-->
+	<%- if @jwt_token_generator['enabled'] -%>
+    	<ConsumerDialectURI>http://wso2.org/claims</ConsumerDialectURI>
+    <%- else -%>
     	<!--ConsumerDialectURI>http://wso2.org/claims</ConsumerDialectURI-->
+    <%- end -%>
 
     	<!--
 		Signature algorithm. Accepts "SHA256withRSA" or "NONE". To disable signing explicitly specify "NONE".
 	-->
-	<!--SignatureAlgorithm>SHA256withRSA</SignatureAlgorithm-->
+	<%- if @jwt_token_generator['enabled'] -%>
+	    <SignatureAlgorithm>SHA256withRSA</SignatureAlgorithm>
+	<%- else -%>
+	    <!--SignatureAlgorithm>SHA256withRSA</SignatureAlgorithm-->
+	<%- end -%>
 
     <!--
 		Enable/Disable JWT generation. Default is false.
 	-->
-	<!--EnableTokenGeneration>false</EnableTokenGeneration-->
+	<%- if @jwt_token_generator['enabled'] -%>
+	    <EnableTokenGeneration>true</EnableTokenGeneration>
+	<%- else -%>
+	    <!--EnableTokenGeneration>true</EnableTokenGeneration-->
+	<%- end -%>
 
         <!--
             This parameter specifies which implementation should be used for generating the Token. JWTGenerator is the
 	    default implementation provided.
 	 -->
-	<TokenGeneratorImpl><%= @jwt_token_generator_impl %></TokenGeneratorImpl>
+	<%- if @jwt_token_generator['enabled'] -%>
+	    <TokenGeneratorImpl><%= @jwt_token_generator['jwt_token_generator_impl'] %></TokenGeneratorImpl>
+	<%- else -%>
+	    <TokenGeneratorImpl>org.wso2.carbon.apimgt.impl.token.JWTGenerator</TokenGeneratorImpl>
+	<%- end -%>
 
          <!--
             This parameter specifies which implementation should be used for generating the Token. For URL safe JWT
@@ -192,7 +212,7 @@
 			<!--
             			Admin username for the API gateway.
         		-->
-                    <%- if @apim_gateway and @apim_keymanager['username'] -%>
+                    <%- if @apim_gateway and @apim_gateway['username'] -%>
                       <Username><%= @apim_gateway['username'] %></Username>
                     <%- else -%>
                       <Username>${admin.username}</Username>
@@ -506,7 +526,11 @@
             Server URL of the API Store.
         -->
 
-        <ServerURL>https://<%= @am_subdomain %>.<%= @domain %>/services/</ServerURL>
+        <%- if @apim_store and @apim_store['host'] and @apim_store['port'] -%>
+          <ServerURL>https://<%= @apim_store['host'] %>:<%= @apim_store['port'] %>/services/</ServerURL>
+        <%- else -%>
+           <ServerURL>https://${carbon.local.ip}:${mgt.transport.https.port}${carbon.context}/services/</ServerURL>
+        <%- end -%>
         <!--
             Admin username for API Store.
         -->

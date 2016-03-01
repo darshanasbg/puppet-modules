@@ -42,12 +42,6 @@ wso2::apim_gateway :
     username : admin
     password : admin
 
-wso2::apim_keymanager :
-    host : am.wso2.com
-    port : 9443
-    username : admin
-    password : admin
-
 wso2::apim_store :
     host : am.wso2.com
     port : 9443
@@ -55,17 +49,6 @@ wso2::apim_store :
 wso2::apim_publisher :
     host : am.wso2.com
     port : 9443
-
-wso2::domain : wso2.com
-wso2::am_subdomain : am
-wso2::keymanager_subdomain : am
-wso2::gatewaymgt_subdomain : am
-
-wso2::am_nio_http_port : 8280
-wso2::am_nio_https_port : 8243 
-
-wso2::admin_username : admin
-wso2::admin_password : admin
 
 # Clustering configuration
 wso2::clustering :
@@ -141,4 +124,6 @@ wso2::third_party_keymanager :
 wso2::map_existing_auth_apps  :
   enabled : true
 
-wso2::jwt_token_generator_impl :  org.wso2.carbon.apimgt.sciquest.jwt.claims.CustomJWTGenerator
+wso2::jwt_token_generator :
+  enabled : true
+  jwt_token_generator_impl :  org.wso2.carbon.apimgt.sciquest.jwt.claims.CustomJWTGenerator
