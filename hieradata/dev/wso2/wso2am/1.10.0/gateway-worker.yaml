@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-wso2::mgt_hostname : am.wso2.com
+wso2::mgt_hostname : gateway.mgt.am.wso2.com
 
 # Clustering configuration
 wso2::worker_node: true
@@ -21,19 +21,22 @@ wso2::clustering :
     membership_scheme : wka
     domain : wso2.am.domain
     local_member_host : "%{hiera('wso2::ipaddress')}"
-    local_member_port : 4200
+    local_member_port : 4100
     sub_domain : worker
     wka :
        members :
          -
-           hostname : "%{hiera('wso2::ipaddress')}"
-           port : 4500
+           hostname : gateway.mgt.am.wso2.com
+           port : 4000
          -
-           hostname : "%{hiera('wso2::ipaddress')}"
+           hostname : gateway.wkr.am.wso2.com
+           port : 4100
+         -
+           hostname : publisher.mgr.am.wso2.com
            port : 4200
-    multicast :
-    k8s :
-    ppaas :
+         -
+           hostname : store.mgr.am.wso2.com
+           port : 4300
 
 
 # Registry mounting
@@ -73,3 +76,6 @@ wso2::dep_sync :
        user : abimaran@wso2.com
        password : password
        append_tenant_id: true
+
+ wso2::ports:
+   offset : 1

@@ -12,24 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-wso2::mgt_hostname : gw.am.wso2.com
-
-wso2::apim_keymanager :
-    host : wso2am-api-key-manager
+wso2::mgt_hostname : gateway.mgt.am.wso2.com
 
 wso2::clustering :
     enabled : true
-    domain : wso2.gw.am.domain
-    sub_domain : mgt
-    local_member_host : local.gw.am.wso2.com
+    membership_scheme : wka
+    domain : wso2.am.domain
+    local_member_host : "%{hiera('wso2::ipaddress')}"
     local_member_port : 4000
-    membership_scheme : kubernetes
-    k8 :
-       k8_master : http://172.17.8.101:8080
-       k8_namespace : default
-       k8_services : wso2am-gateway-manager
-       k8_master_username :
-       k8_master_password :
+    sub_domain : mgt
+    wka :
+       members :
+         -
+           hostname : gateway.mgt.am.wso2.com
+           port : 4000
+         -
+           hostname : gateway.wkr.am.wso2.com
+           port : 4100
+         -
+           hostname : publisher.mgr.am.wso2.com
+           port : 4200
+         -
+           hostname : store.mgr.am.wso2.com
+           port : 4300
 
 
 
@@ -70,3 +75,6 @@ wso2::dep_sync :
        user : abimaran@wso2.com
        password : password
        append_tenant_id: true
+
+ wso2::ports:
+   offset : 0

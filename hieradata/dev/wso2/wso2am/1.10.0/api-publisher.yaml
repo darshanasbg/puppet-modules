@@ -15,32 +15,39 @@
 wso2::mgt_hostname : publisher.am.wso2.com
 
 wso2::apim_gateway :
-    host : wso2am-gateway-manager
-
-wso2::apim_keymanager :
-    host : wso2am-api-key-manager
+    host : gateway.mgt.am.wso2.com
 
 wso2::apim_store :
-    host : wso2am-api-store
+    host : store.am.wso2.com
 
 wso2::clustering :
     enabled : true
-    domain : wso2.pub.store.am.domain
+    membership_scheme : wka
+    domain : wso2.am.domain
+    local_member_host : "%{hiera('wso2::ipaddress')}"
+###### TEST MODIFICATION #####
+    local_member_port : 4200
+###### END MODIFICATION #####
     sub_domain : mgt
-    local_member_host : local.publisher.am.wso2.com
-    local_member_port : 4000
-    membership_scheme : kubernetes
-    k8 :
-       k8_master : http://172.17.8.101:8080
-       k8_namespace : default
-       k8_services : wso2am-api-publisher,wso2am-api-store
-       k8_master_username :
-       k8_master_password :
+    wka :
+       members :
+         -
+           hostname : gateway.mgt.am.wso2.com
+           port : 4000
+         -
+           hostname : gateway.wkr.am.wso2.com
+           port : 4100
+         -
+           hostname : publisher.mgr.am.wso2.com
+           port : 4200
+         -
+           hostname : store.mgr.am.wso2.com
+           port : 4300
 
-wso2::ports:
-  proxyPort :
-    http : 32012
-    https : 32013
+#wso2::ports:
+#  proxyPort :
+#    http : 32012
+#    https : 32013
 
 
 
@@ -66,3 +73,8 @@ wso2::master_datasources :
 # User management configurations
 # User management datasource change to user db
 wso2::usermgt_datasource: wso2user_db
+
+
+########## Configs needed for local testing ############
+ wso2::ports:
+   offset : 2
