@@ -76,5 +76,5 @@ wso2::dep_sync :
        password : password
        append_tenant_id: true
 
- wso2::ports:
-   offset : 0
+wso2::ports:
+    offset : 0

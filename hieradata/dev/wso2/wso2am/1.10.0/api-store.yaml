@@ -75,5 +75,5 @@ wso2::usermgt_datasource: wso2user_db
 
 
 ########## Configs needed for local testing ############
- wso2::ports:
-   offset : 3
+wso2::ports:
+    offset : 3
