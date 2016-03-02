@@ -191,6 +191,6 @@ wso2::file_list :
   - repository/components/lib/trilead-ssh2-1.0.0-build215.jar
   - repository/components/lib/svnkit-all-1.8.7.wso2v1.jar
 
- wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}-%{::﻿product_profile}"
- wso2::service_name: "wso2am-%{::﻿product_profile}"
- ###### END MODIFICATION #####
+wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
+wso2::service_name: wso2am
+###### END MODIFICATION #####
