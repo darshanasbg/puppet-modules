@@ -78,3 +78,10 @@ wso2::dep_sync :
 
 wso2::ports:
     offset : 0
+
+# User store configs
+wso2::usermgt :
+    add_admin_user : true
+    admin_username : admin
+    admin_password : admin
+    type : jdbc
