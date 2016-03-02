@@ -15,13 +15,13 @@
 ---
 classes :
   - wso2am
-wso2::pack_filename : "%{::product_name}-%{::product_version}.zip"
-wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
+wso2::service_name: wso2am
+
+wso2::hostname : "%{hiera('wso2::ipaddress')}"
+wso2::mgt_hostname : am.wso2.com
+
 wso2::template_list :
   - repository/conf/api-manager.xml
-
-wso2::service_name: wso2am
-wso2::mgt_hostname : am.wso2.com
 
 wso2::apim_gateway :
     host : am.wso2.com

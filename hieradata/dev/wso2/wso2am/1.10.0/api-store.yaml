@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-wso2::hostname : store.am.wso2.com
 wso2::mgt_hostname : store.am.wso2.com
 
 wso2::apim_gateway :
