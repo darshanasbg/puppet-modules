@@ -24,17 +24,22 @@ wso2::clustering :
     wka :
        members :
          -
-           hostname : gateway.mgt.am.wso2.com
+###### TEST MODIFICATION #####
+           hostname : gateway1.am.wso2.com
            port : 4000
          -
-           hostname : gateway.wkr.am.wso2.com
-           port : 4100
-         -
-           hostname : publisher.mgr.am.wso2.com
+           hostname : publisher1.am.wso2.com
            port : 4200
          -
-           hostname : store.mgr.am.wso2.com
+           hostname : publisher2.am.wso2.com
+           port : 4250
+         -
+           hostname : store1.am.wso2.com
            port : 4300
+         -
+           hostname : store2.am.wso2.com
+           port : 4350
+###### END MODIFICATION #####
 
 
 

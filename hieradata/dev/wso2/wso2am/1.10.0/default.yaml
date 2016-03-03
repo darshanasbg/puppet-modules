@@ -54,11 +54,22 @@ wso2::clustering :
     wka :
        members :
          -
-           hostname : "%{hiera('wso2::ipaddress')}"
+###### TEST MODIFICATION #####
+           hostname : gateway1.am.wso2.com
+           port : 4000
+         -
+           hostname : publisher1.am.wso2.com
            port : 4200
-    multicast :
-    k8s :
-    ppaas :
+         -
+           hostname : publisher2.am.wso2.com
+           port : 4250
+         -
+           hostname : store1.am.wso2.com
+           port : 4300
+         -
+           hostname : store2.am.wso2.com
+           port : 4350
+###### END MODIFICATION #####
 
 
 # Datasource configs
@@ -193,4 +204,34 @@ wso2::file_list :
 
 wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
 wso2::service_name: wso2am
+
+wso2::hosts_mapping :
+  publisher_lb :
+    ip_address : 127.0.0.1
+    hostname : publisher.am.wso2.com
+  store_lb :
+    ip_address : 127.0.0.1
+    hostname : store.am.wso2.com
+  gateway_manager_lb :
+    ip_address : 127.0.0.1
+    hostname : gateway.mgt.am.wso2.com
+  gqteway_worker_lb :
+    ip_address : 127.0.0.1
+    hostname : gateway.am.wso2.com
+#Clustering Related Hostmapping below
+  gateway_manager_node :
+    ip_address : 127.0.0.1
+    hostname : gateway1.am.wso2.com
+  publisher_node1 :
+    ip_address : 127.0.0.1
+    hostname : publisher1.am.wso2.com
+  publisher_node2 :
+    ip_address : 127.0.0.1
+    hostname : publisher2.am.wso2.com
+  store_node1 :
+    ip_address : 127.0.0.1
+    hostname : store1.am.wso2.com
+  store_node2 :
+    ip_address : 127.0.0.1
+    hostname : store2.am.wso2.com
 ###### END MODIFICATION #####
