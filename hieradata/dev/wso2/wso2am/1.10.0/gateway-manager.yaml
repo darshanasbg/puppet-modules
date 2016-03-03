@@ -14,36 +14,6 @@
 
 wso2::mgt_hostname : gateway.mgt.am.wso2.com
 
-wso2::clustering :
-    enabled : true
-    membership_scheme : wka
-    domain : wso2.am.domain
-    local_member_host : "%{hiera('wso2::ipaddress')}"
-    local_member_port : 4000
-    sub_domain : mgt
-    wka :
-       members :
-         -
-###### TEST MODIFICATION #####
-           hostname : gateway1.am.wso2.com
-           port : 4000
-         -
-           hostname : publisher1.am.wso2.com
-           port : 4200
-         -
-           hostname : publisher2.am.wso2.com
-           port : 4250
-         -
-           hostname : store1.am.wso2.com
-           port : 4300
-         -
-           hostname : store2.am.wso2.com
-           port : 4350
-###### END MODIFICATION #####
-
-
-
-
 # Datasource configs
 wso2::master_datasources :
   wso2user_db :
@@ -90,3 +60,30 @@ wso2::usermgt :
     admin_username : admin
     admin_password : admin
     type : jdbc
+
+wso2::clustering :
+    enabled : true
+    membership_scheme : wka
+    domain : wso2.am.domain
+    local_member_host : "%{hiera('wso2::ipaddress')}"
+    local_member_port : 4000
+    sub_domain : mgt
+    wka :
+       members :
+         -
+###### TEST MODIFICATION #####
+           hostname : gateway1.am.wso2.com
+           port : 4000
+         -
+           hostname : publisher1.am.wso2.com
+           port : 4200
+         -
+           hostname : publisher2.am.wso2.com
+           port : 4250
+         -
+           hostname : store1.am.wso2.com
+           port : 4300
+         -
+           hostname : store2.am.wso2.com
+           port : 4350
+###### END MODIFICATION #####
