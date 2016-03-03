@@ -14,8 +14,24 @@
 
 wso2::mgt_hostname : gateway.mgt.am.wso2.com
 
+
+########## Configs needed for local testing ############
+# Deployment synchronization configuration
+wso2::dep_sync :
+    enabled : false
+    auto_checkout : true
+    auto_commit : true
+    repository_type : svn
+    svn :
+       url : https://svn.wso2.com/wso2/interns/2013/abimaran/clustering/-1234/
+       user : abimaran@wso2.com
+       password : password
+       append_tenant_id: true
+
+wso2::ports:
+    offset : 1
+
 # Clustering configuration
-wso2::worker_node: true
 wso2::clustering :
     enabled : true
     membership_scheme : wka
@@ -42,45 +58,3 @@ wso2::clustering :
            hostname : store2.am.wso2.com
            port : 4350
 ###### END MODIFICATION #####
-
-
-# Registry mounting
-wso2::registry_mounts:
-  wso2_config_db:
-    path: /_system/config
-    target_path: /_system/config/apim
-    read_only: true
-    registry_root: /
-    enable_cache: true
-
-  wso2_gov_db:
-    path: /_system/gov
-    target_path: /_system/gov
-    read_only: true
-    registry_root: /
-    enable_cache: true
-
-
-# User store configs
-wso2::usermgt :
-    add_admin_user : true
-    admin_username : admin
-    admin_password : admin
-    type : jdbc
-
-
-########## Configs needed for local testing ############
-# Deployment synchronization configuration
-wso2::dep_sync :
-    enabled : false
-    auto_checkout : true
-    auto_commit : true
-    repository_type : svn
-    svn :
-       url : https://svn.wso2.com/wso2/interns/2013/abimaran/clustering/-1234/
-       user : abimaran@wso2.com
-       password : password
-       append_tenant_id: true
-
-wso2::ports:
-    offset : 1

@@ -728,7 +728,11 @@
         <parameter name="properties">
             <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
             <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
+            <%- if @worker_node or @product_profile == "gateway-worker" -%>
+            <property name="subDomain" value="worker"/>
+            <%- else -%>
             <property name="subDomain" value="<%= @clustering['sub_domain'] %>"/>
+            <%- end -%>
         </parameter>
 
         <!--

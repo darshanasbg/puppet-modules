@@ -317,12 +317,10 @@ do
     -Dfile.encoding=UTF8 \
     -Djava.net.preferIPv4Stack=true \
     -Dcom.ibm.cacheLocalHost=true \
-<%- if @worker_node -%>
+<%- if @worker_node or @product_profile == "gateway-worker" -%>
     -DworkerNode=true \
 <%- end -%>
-<%- if @product_profile != "am-manager" -%>
     -Dprofile=<%= @product_profile %> \
-<%- end -%>
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done

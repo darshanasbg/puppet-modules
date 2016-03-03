@@ -14,29 +14,6 @@
 
 wso2::mgt_hostname : publisher.am.wso2.com
 
-# Datasource configs
-wso2::master_datasources :
-  wso2user_db :
-    name : WSO2UM_DB
-    description : The datasource is used for user mangement and userstore
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://userdb.mysql-wso2.com:3306/userdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::mysql_username')}"
-    password : "%{hiera('wso2::datasources::common::mysql_password')}"
-    #secretAlias :
-    jndi_config : jdbc/WSO2UM_DB
-    max_active : "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
-    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
-    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
-
-
-# User management configurations
-# User management datasource change to user db
-wso2::usermgt_datasource: wso2user_db
-
 
 ########## Configs needed for local testing ############
 wso2::ports:
@@ -48,6 +25,7 @@ wso2::usermgt :
     admin_username : admin
     admin_password : admin
     type : jdbc
+
 
 wso2::clustering :
     enabled : true
