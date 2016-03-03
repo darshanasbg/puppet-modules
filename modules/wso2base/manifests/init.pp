@@ -65,5 +65,4 @@ class wso2base {
   }
 
   contain wso2base::system
-  contain wso2base::java
 }
