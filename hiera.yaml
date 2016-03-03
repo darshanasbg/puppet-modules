@@ -14,14 +14,10 @@
 
 ---
 :hierarchy:
-    - "node/%{::clientcert}"
-    - "wso2/%{::product_name}/%{::product_version}/%{::product_profile}"
-    - "wso2/%{::product_name}/%{::product_version}/default"
-    - "osfamily/%{::osfamily}"
-    - "vm_type/%{::vm_type}"
+    - wso2/wso2am/1.10.0/default
     - wso2/common
     - common
 :backends:
     - yaml
 :yaml:
-    :datadir: "hieradata/%{::environment}"
+    :datadir: "/etc/puppet/hieradata/%{::environment}"

@@ -18,7 +18,7 @@ classes :
 wso2::service_name: wso2am
 
 wso2::hostname : "%{hiera('wso2::ipaddress')}"
-wso2::mgt_hostname : am.wso2.com
+wso2::mgt_hostname : "%{hiera('wso2::ipaddress')}"
 
 wso2::template_list :
   - repository/conf/api-manager.xml
