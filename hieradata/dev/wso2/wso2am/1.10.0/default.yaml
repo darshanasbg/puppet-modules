@@ -33,15 +33,11 @@ wso2::apim_gateway :
 
 wso2::apim_store :
     host : store.am.wso2.com
-###### TEST MODIFICATION #####
-    port : 9446
-###### END MODIFICATION #####
+    port : 9443
 
 wso2::apim_publisher :
     host : publisher.am.wso2.com
-###### TEST MODIFICATION #####
-    port : 9445
-###### END MODIFICATION #####
+    port : 9443
 
 # Clustering configuration
 wso2::clustering :
@@ -192,13 +188,3 @@ wso2::map_existing_auth_apps  :
 wso2::jwt_token_generator :
   enabled : true
   jwt_token_generator_impl :  org.wso2.carbon.apimgt.sciquest.jwt.claims.CustomJWTGenerator
-
-###### TEST MODIFICATION #####
-########## Configs needed for local testing ############
-wso2::file_list :
-  - repository/components/lib/mysql-connector-java-5.1.38-bin.jar
-  - repository/components/lib/trilead-ssh2-1.0.0-build215.jar
-  - repository/components/lib/svnkit-all-1.8.7.wso2v1.jar
-
-wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
-wso2::service_name: wso2am
