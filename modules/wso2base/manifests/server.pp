@@ -38,13 +38,6 @@ define wso2base::server (
 
   notice("Starting WSO2 product [name] ${::product_name}, [version] ${::product_version}, [CARBON_HOME] ${carbon_home}")
 
-  # Remove any existing installations
-#  wso2base::clean { $carbon_home:
-#    mode              => $maintenance_mode,
-#    pack_filename     => $pack_filename,
-#    pack_dir          => $pack_dir
-#  }
-
   # Copy the WSO2 product pack, extract and set permissions
   wso2base::install { $carbon_home:
     mode              => $install_mode,
@@ -76,7 +69,6 @@ define wso2base::server (
       group             => $wso2_group,
       product_name      => $::product_name,
       product_version   => $::product_version,
-      notify            => Service["${service_name}"],
       require           => Wso2base::Install[$carbon_home]
     }
   }
