@@ -39,11 +39,11 @@ define wso2base::server (
   notice("Starting WSO2 product [name] ${::product_name}, [version] ${::product_version}, [CARBON_HOME] ${carbon_home}")
 
   # Remove any existing installations
-  wso2base::clean { $carbon_home:
-    mode              => $maintenance_mode,
-    pack_filename     => $pack_filename,
-    pack_dir          => $pack_dir
-  }
+#  wso2base::clean { $carbon_home:
+#    mode              => $maintenance_mode,
+#    pack_filename     => $pack_filename,
+#    pack_dir          => $pack_dir
+#  }
 
   # Copy the WSO2 product pack, extract and set permissions
   wso2base::install { $carbon_home:
@@ -54,7 +54,6 @@ define wso2base::server (
     user              => $wso2_user,
     group             => $wso2_group,
     product_name      => $::product_name,
-    require           => Wso2base::Clean[$carbon_home]
   }
 
   # Copy any patches to patch directory
@@ -100,7 +99,6 @@ define wso2base::server (
       user              => $wso2_user,
       group             => $wso2_group,
       wso2_module       => $caller_module_name,
-      notify            => Service["${service_name}"],
       require           => Wso2base::Patch[$carbon_home]
     }
   }
@@ -114,21 +112,9 @@ define wso2base::server (
     require           => Wso2base::Configure[$carbon_home]
   }
 
-  # Start the service
   if $vm_type != 'docker' {
-    service { $service_name:
-      ensure            => running,
-      hasstatus         => true,
-      hasrestart        => true,
-      enable            => true,
-      require           => [Wso2base::Deploy[$carbon_home]],
-    }
-  }
-
-  if $vm_type != 'docker' {
-    notify{ "Successfully started WSO2 service [name] ${service_name}, [CARBON_HOME] ${carbon_home}":
+    notify{ "Successfully deployed WSO2 service [name] ${service_name}, [CARBON_HOME] ${carbon_home}":
       withpath => true,
-      require  => Service[$service_name]
     }
   }
 }

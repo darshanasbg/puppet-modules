@@ -25,7 +25,10 @@ wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
 wso2::patches_dir : repository/components/patches
 
 wso2::ipaddress : "%{::ipaddress}"
-wso2::fqdn : "%{::fqdn}"
+
+# JAVA_HOME value used in wso2server.sh
+java_home: /opt/java
+
 
 # System service name
 wso2::service_template: wso2base/wso2service.erb

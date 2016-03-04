@@ -49,7 +49,6 @@ class wso2base {
   $ports              = hiera_hash("wso2::ports")
   $jvm                = hiera_hash("wso2::jvm")
   $ipaddress          = hiera("wso2::ipaddress")
-  $fqdn               = hiera("wso2::fqdn")
 
   $carbon_home        = "${install_dir}/${pack_extracted_dir}"
 
