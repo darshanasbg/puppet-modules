@@ -13,8 +13,4 @@
 # limitations under the License.
 
 ---
-java_install_dir: /mnt/jdk-7u79
-java_source_file: jdk-7u79-linux-i586.tar.gz
-
-# symlink to Java install directory
 java_home: /opt/java

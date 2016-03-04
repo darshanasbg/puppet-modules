@@ -1,4 +1,4 @@
-# Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+﻿# Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-wso2::mgt_hostname : publisher.am.wso2.com
+wso2::mgt_hostname : gateway.mgt.am.wso2.com
 
 # Datasource configs
 wso2::master_datasources :
@@ -39,8 +39,20 @@ wso2::usermgt_datasource: wso2user_db
 
 
 ########## Configs needed for local testing ############
+# Deployment synchronization configuration
+wso2::dep_sync :
+    enabled : false
+    auto_checkout : true
+    auto_commit : true
+    repository_type : svn
+    svn :
+       url : https://svn.wso2.com/wso2/interns/2013/abimaran/clustering/-1234/
+       user : abimaran@wso2.com
+       password : password
+       append_tenant_id: true
+
 wso2::ports:
-    offset : 2
+    offset : 0
 
 # User store configs
 wso2::usermgt :
@@ -54,9 +66,7 @@ wso2::clustering :
     membership_scheme : wka
     domain : wso2.am.domain
     local_member_host : "%{hiera('wso2::ipaddress')}"
-###### TEST MODIFICATION #####
-    local_member_port : 4200
-###### END MODIFICATION #####
+    local_member_port : 4000
     sub_domain : mgt
     wka :
        members :

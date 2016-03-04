@@ -12,97 +12,69 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-wso2::hostname : store.am.wso2.com
 wso2::mgt_hostname : store.am.wso2.com
 
-wso2::apim_gateway :
-    host : wso2am-gateway-manager
+# Datasource configs
+wso2::master_datasources :
+  wso2user_db :
+    name : WSO2UM_DB
+    description : The datasource is used for user mangement and userstore
+    driver_class_name : com.mysql.jdbc.Driver
+    url : jdbc:mysql://userdb.mysql-wso2.com:3306/userdb?autoReconnect=true
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
+    #secretAlias :
+    jndi_config : jdbc/WSO2UM_DB
+    max_active : "%{hiera('wso2::datasources::common::max_active')}"
+    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
+    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
+    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
+    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
+    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
-wso2::apim_keymanager :
-    host : wso2am-api-key-manager
+
+# User management configurations
+# User management datasource change to user db
+wso2::usermgt_datasource: wso2user_db
+
+
+########## Configs needed for local testing ############
+wso2::ports:
+    offset : 3
+
+# User store configs
+wso2::usermgt :
+    add_admin_user : true
+    admin_username : admin
+    admin_password : admin
+    type : jdbc
+
 
 wso2::clustering :
     enabled : true
-    domain : wso2.pub.store.am.domain
+    membership_scheme : wka
+    domain : wso2.am.domain
+    local_member_host : "%{hiera('wso2::ipaddress')}"
+###### TEST MODIFICATION #####
+    local_member_port : 4300
+###### END MODIFICATION #####
     sub_domain : mgt
-    local_member_host : local.store.am.wso2.com
-    local_member_port : 4000
-    membership_scheme : kubernetes
-    k8 :
-       k8_master : http://172.17.8.101:8080
-       k8_namespace : default
-       k8_services : wso2am-api-store,wso2am-api-publisher
-       k8_master_username :
-       k8_master_password :
-
-wso2::master_datasources :
-
-  wso2_gov_db :
-    name : WSO2_GOV_DB
-    description : The datasource used for gov registry
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://172.17.8.1:3306/GOV_DB?autoReconnect=true
-    username : root
-    password : root
-    #securevault : false
-    jndi_config : jdbc/WSO2_GOV_DB
-    max_active : "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
-    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
-    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
-
-  wso2_config_db :
-    name : WSO2_CONFIG_DB
-    description : The datasource used for config registry
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://172.17.8.1:3306/STORE_PUB_CONFIG_DB?autoReconnect=true
-    username : root
-    password : root
-    #securevault :
-    jndi_config : jdbc/WSO2_CONFIG_DB
-    max_active : "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
-    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
-    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
-
-  wso2user_db :
-    name : WSO2USER_DB
-    description : The datasource is used for user mangement and userstore
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://172.17.8.1:3306/WSO2USER_DB?autoReconnect=true
-    username : root
-    password : root
-    #securevault :
-    jndi_config : jdbc/WSO2USER_DB
-    max_active : "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
-    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
-    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
-
-wso2::am_datasources :
-  wso2am_db:
-    name : WSO2AM_DB
-    description : The datasource used for API Manager database
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://172.17.8.1:3306/APIMGT_DB?autoReconnect=true
-    username : root
-    password : root
-    #secret_alias :
-    jndi_config : jdbc/WSO2AM_DB
-    max_active: "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait: "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow: "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    default_auto_commit: "%{hiera('wso2::datasources::common::default_auto_commit')}"
-    validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
-    validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
-
-wso2::ports:
-  proxyPort :
-    http : 32014
-    https : 32015
+    wka :
+       members :
+         -
+###### TEST MODIFICATION #####
+           hostname : gateway1.am.wso2.com
+           port : 4000
+         -
+           hostname : publisher1.am.wso2.com
+           port : 4200
+         -
+           hostname : publisher2.am.wso2.com
+           port : 4250
+         -
+           hostname : store1.am.wso2.com
+           port : 4300
+         -
+           hostname : store2.am.wso2.com
+           port : 4350
+###### END MODIFICATION #####

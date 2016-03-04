@@ -23,8 +23,6 @@ class wso2base {
   $template_list      = hiera_array("wso2::template_list")
   $file_list          = hiera_array("wso2::file_list")
 
-  $java_install_dir   = hiera("java_install_dir")
-  $java_source_file   = hiera("java_source_file")
   $worker_node        = hiera("wso2::worker_node")
 
   # symlink path to Java install directory
@@ -64,14 +62,7 @@ class wso2base {
     service_name      => $service_name,
     service_template  => $service_template,
     hosts_template    => $hosts_template,
-  } ->
-  class { '::wso2base::java':
-    java_install_dir  => $java_install_dir,
-    java_source_file  => $java_source_file,
-    wso2_user         => $wso2_user,
-    java_home         => $java_home
   }
 
   contain wso2base::system
-  contain wso2base::java
 }

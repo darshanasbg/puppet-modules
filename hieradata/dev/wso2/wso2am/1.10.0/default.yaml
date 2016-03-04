@@ -13,29 +13,18 @@
 # limitations under the License.
 
 ---
-classes:
+classes :
   - wso2am
-wso2::pack_filename: "%{::product_name}-%{::product_version}.zip"
-wso2::pack_extracted_dir: "%{::product_name}-%{::product_version}"
+wso2::service_name: wso2am
+
+wso2::hostname : "%{hiera('wso2::ipaddress')}"
+wso2::mgt_hostname : am.wso2.com
+
 wso2::template_list :
   - repository/conf/api-manager.xml
 
-wso2::service_name: wso2am
-wso2::mgt_hostname : am.wso2.com
-
-wso2::usermgt :
-    add_admin_user : false
-    admin_username : networkerauth
-    admin_password : REPLACEME
-    type : ldap
-    connection_url : ldap://rhqipa01.sciquest.com:389
-    connection_name : uid=vcenter_ro,cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
-    connection_password : REPLACEME
-    user_search_base : cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
-    group_search_base : cn=groups,cn=accounts,dc=ipa,dc=sciquest,dc=com
-
 wso2::apim_gateway :
-    host : am.wso2.com
+    host : gateway.mgt.am.wso2.com
     port : 9443
     api_endpoint_port : 8280
     secure_api_endpoint_port : 8243
@@ -43,12 +32,16 @@ wso2::apim_gateway :
     password : admin
 
 wso2::apim_store :
-    host : am.wso2.com
-    port : 9443
+    host : store.am.wso2.com
+###### TEST MODIFICATION #####
+    port : 9446
+###### END MODIFICATION #####
 
 wso2::apim_publisher :
-    host : am.wso2.com
-    port : 9443
+    host : publisher.am.wso2.com
+###### TEST MODIFICATION #####
+    port : 9445
+###### END MODIFICATION #####
 
 # Clustering configuration
 wso2::clustering :
@@ -56,35 +49,37 @@ wso2::clustering :
     membership_scheme : wka
     domain : wso2.am.domain
     local_member_host : "%{hiera('wso2::ipaddress')}"
-    local_member_port : 4500
+    local_member_port : 4000
     sub_domain : mgt
     wka :
        members :
          -
-           hostname : "%{hiera('wso2::ipaddress')}"
-           port : 4500
+           hostname : gateway1.am.wso2.com
+           port : 4000
          -
-           hostname : "%{hiera('wso2::ipaddress')}"
-           port : 4200
-    multicast :
-    k8s :
-    ppaas :
+           hostname : publisher1.am.wso2.com
+           port : 4000
+         -
+           hostname : publisher2.am.wso2.com
+           port : 4000
+         -
+           hostname : store1.am.wso2.com
+           port : 4000
+         -
+           hostname : store2.am.wso2.com
+           port : 4000
 
-wso2::file_list :
-  - repository/components/lib/oauth-app-registration-1.0.0.jar
-  - repository/components/lib/jwt-custom-claims-1.0.0.jar
-  - repository/components/lib/gateway.client-1.0.0.jar
 
+# Datasource configs
 #wso2::am_datasources : []
-
 wso2::master_datasources :
-  wso2am_db:
+  wso2am_db :
     name : WSO2AM_DB
     description : The datasource used for API Manager database
     driver_class_name : com.mysql.jdbc.Driver
     url : jdbc:mysql://apimgtdb.mysql-wso2.com:3306/apimgtdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::username')}"
-    password : "%{hiera('wso2::datasources::common::password')}"
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
     #secret_alias :
     jndi_config : jdbc/WSO2AM_DB
     max_active: "%{hiera('wso2::datasources::common::max_active')}"
@@ -96,11 +91,11 @@ wso2::master_datasources :
 
   wso2_carbon_db :
     name : WSO2_CARBON_DB
-    description : The datasource used for registry and user manager
+    description : The datasource used for local registry
     driver_class_name : org.h2.Driver
     url : jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-    username : "%{hiera('wso2::datasources::common::h2username')}"
-    password : "%{hiera('wso2::datasources::common::h2password')}"
+    username : "%{hiera('wso2::datasources::common::username')}"
+    password : "%{hiera('wso2::datasources::common::password')}"
     #secretAlias :
     jndi_config : jdbc/WSO2CarbonDB
     max_active : "%{hiera('wso2::datasources::common::max_active')}"
@@ -110,8 +105,78 @@ wso2::master_datasources :
     validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
     validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
-wso2::datasources::common::h2username : 'wso2carbon'
-wso2::datasources::common::h2password : 'wso2carbon'
+  wso2_config_db :
+    name : WSO2CONFIG_DB
+    description : The datasource used for config registry
+    driver_class_name : com.mysql.jdbc.Driver
+    url : jdbc:mysql://configdb.mysql-wso2.com:3306/configdb?autoReconnect=true
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
+    #secret_alias :
+    jndi_config : jdbc/WSO2CONFIG_DB
+    max_active: "%{hiera('wso2::datasources::common::max_active')}"
+    max_wait: "%{hiera('wso2::datasources::common::max_wait')}"
+    test_on_borrow: "%{hiera('wso2::datasources::common::test_on_borrow')}"
+    validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
+    validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
+
+  wso2_gov_db :
+    name : WSO2GOV_DB
+    description : The datasource used for gov registry
+    driver_class_name : com.mysql.jdbc.Driver
+    url : jdbc:mysql://govdb.mysql-wso2.com:3306/govdb?autoReconnect=true
+    username : "%{hiera('wso2::datasources::common::mysql_username')}"
+    password : "%{hiera('wso2::datasources::common::mysql_password')}"
+    #secretAlias :
+    jndi_config : jdbc/WSO2GOV_DB
+    max_active: "%{hiera('wso2::datasources::common::max_active')}"
+    max_wait: "%{hiera('wso2::datasources::common::max_wait')}"
+    test_on_borrow: "%{hiera('wso2::datasources::common::test_on_borrow')}"
+    validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
+    validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
+
+
+wso2::datasources::common::mysql_username : 'root'
+wso2::datasources::common::mysql_password : 'root'
+
+# Registry mounting
+wso2::registry_mounts:
+  wso2_config_db:
+    path: /_system/config
+    target_path: /_system/config/apim
+    read_only: false
+    registry_root: /
+    enable_cache: true
+
+  wso2_gov_db:
+    path: /_system/gov
+    target_path: /_system/gov
+    read_only: false
+    registry_root: /
+    enable_cache: true
+
+
+# User management configurations
+# User store configs
+wso2::usermgt :
+    add_admin_user : false
+    admin_username : networkerauth
+    admin_password : REPLACEME
+    type : ldap
+    connection_url : ldap://rhqipa01.sciquest.com:389
+    connection_name : uid=vcenter_ro,cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+    connection_password : REPLACEME
+    user_search_base : cn=users,cn=accounts,dc=ipa,dc=sciquest,dc=com
+    group_search_base : cn=groups,cn=accounts,dc=ipa,dc=sciquest,dc=com
+
+## XXX Specific Custom changes
+wso2::template_list :
+  - repository/deployment/server/jaggeryapps/store/site/conf/site.json
+  - repository/deployment/server/synapse-configs/default/api/_TokenAPI_.xml
+wso2::file_list :
+  - repository/components/lib/oauth-app-registration-1.0.0.jar
+  - repository/components/lib/jwt-custom-claims-1.0.0.jar
+  - repository/components/lib/gateway.client-1.0.0.jar
 
 wso2::third_party_keymanager :
   enabled : true
@@ -127,3 +192,44 @@ wso2::map_existing_auth_apps  :
 wso2::jwt_token_generator :
   enabled : true
   jwt_token_generator_impl :  org.wso2.carbon.apimgt.sciquest.jwt.claims.CustomJWTGenerator
+
+###### TEST MODIFICATION #####
+########## Configs needed for local testing ############
+wso2::file_list :
+  - repository/components/lib/mysql-connector-java-5.1.38-bin.jar
+  - repository/components/lib/trilead-ssh2-1.0.0-build215.jar
+  - repository/components/lib/svnkit-all-1.8.7.wso2v1.jar
+
+wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
+wso2::service_name: wso2am
+
+wso2::hosts_mapping :
+  publisher_lb :
+    ip_address : 127.0.0.1
+    hostname : publisher.am.wso2.com
+  store_lb :
+    ip_address : 127.0.0.1
+    hostname : store.am.wso2.com
+  gateway_manager_lb :
+    ip_address : 127.0.0.1
+    hostname : gateway.mgt.am.wso2.com
+  gqteway_worker_lb :
+    ip_address : 127.0.0.1
+    hostname : gateway.am.wso2.com
+#Clustering Related Hostmapping below
+  gateway_manager_node :
+    ip_address : 127.0.0.1
+    hostname : gateway1.am.wso2.com
+  publisher_node1 :
+    ip_address : 127.0.0.1
+    hostname : publisher1.am.wso2.com
+  publisher_node2 :
+    ip_address : 127.0.0.1
+    hostname : publisher2.am.wso2.com
+  store_node1 :
+    ip_address : 127.0.0.1
+    hostname : store1.am.wso2.com
+  store_node2 :
+    ip_address : 127.0.0.1
+    hostname : store2.am.wso2.com
+###### END MODIFICATION #####
