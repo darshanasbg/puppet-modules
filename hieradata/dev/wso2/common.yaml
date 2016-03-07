@@ -24,35 +24,14 @@ wso2::install_dir : /mnt
 wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
 wso2::patches_dir : repository/components/patches
 
-# Host mapping to be made in etc/hosts
-wso2::hosts_mapping :
-  localhost :
-    ip_address : 127.0.0.1
-    hostname : localhost am.wso2.com
-  qaa-node1 :
-    ip_address : 127.0.0.1
-    hostname : osboxes
-  apimgtdb :
-    ip_address : 127.0.0.1
-    hostname : apimgtdb.mysql-wso2.com
-  configdb :
-    ip_address : 127.0.0.1
-    hostname : configdb.mysql-wso2.com
-  govdb :
-    ip_address : 127.0.0.1
-    hostname : govdb.mysql-wso2.com
-  userdb :
-    ip_address : 127.0.0.1
-    hostname : userdb.mysql-wso2.com
-
 wso2::ipaddress : "%{::ipaddress}"
-wso2::fqdn : "%{::fqdn}"
+
+# JAVA_HOME value used in wso2server.sh
+java_home: /opt/java
+
 
 # System service name
 wso2::service_template: wso2base/wso2service.erb
-
-# Host entry template
-wso2::hosts_template: wso2base/hosts.erb
 
 # Puppet template list to be populated
 wso2::template_list :
