@@ -170,12 +170,12 @@ wso2::template_list :
   - repository/deployment/server/jaggeryapps/store/site/conf/site.json
   - repository/deployment/server/synapse-configs/default/api/_TokenAPI_.xml
   - repository/resources/api_templates/velocity_template.xml
-  - repository/deployment/server/webapps/api#am#publisher#v0.9.war
 
 wso2::file_list :
   - repository/components/lib/oauth-app-registration-1.0.0.jar
   - repository/components/lib/jwt-custom-claims-1.0.0.jar
   - repository/components/lib/gateway.client-1.0.0.jar
+  - repository/deployment/server/webapps/api#am#publisher#v0.9.war
 
 wso2::third_party_keymanager :
   enabled : true
