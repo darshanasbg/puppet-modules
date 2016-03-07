@@ -173,6 +173,7 @@ wso2::usermgt :
 wso2::template_list :
   - repository/deployment/server/jaggeryapps/store/site/conf/site.json
   - repository/deployment/server/synapse-configs/default/api/_TokenAPI_.xml
+  - repository/resources/api_templates/velocity_template.xml
 wso2::file_list :
   - repository/components/lib/oauth-app-registration-1.0.0.jar
   - repository/components/lib/jwt-custom-claims-1.0.0.jar
@@ -232,4 +233,7 @@ wso2::hosts_mapping :
   store_node2 :
     ip_address : 127.0.0.1
     hostname : store2.am.wso2.com
+
+wso2::add_concurrent_throttle_handler :
+  enabled : true
 ###### END MODIFICATION #####
