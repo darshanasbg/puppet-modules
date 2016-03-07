@@ -319,8 +319,8 @@ do
     -Dcom.ibm.cacheLocalHost=true \
 
 <%- if @api_export_import['enabled'] -%>
-    -Denvironment.host=<% @api_export_import['backend_api_host_ip'] %> \
-    -Denvironment.port=<% @api_export_import['backend_api_port'] %> \
+    -Denvironment.host=<%= @api_export_import['backend_api_host_ip'] %> \
+    -Denvironment.port=<%= @api_export_import['backend_api_port'] %> \
 <%- end -%>
 
 <%- if @worker_node -%>
