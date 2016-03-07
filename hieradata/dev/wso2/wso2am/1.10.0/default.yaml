@@ -210,7 +210,7 @@ wso2::service_name: wso2am
 wso2::add_concurrent_throttle_handler :
   enabled : true
 
-wso2::api_export_import
+wso2::api_export_import :
   enabled : true
   backend_api_host_ip : 192.168.69.117
   backend_api_port  : 8080
