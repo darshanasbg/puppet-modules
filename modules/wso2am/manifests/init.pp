@@ -28,6 +28,8 @@ class wso2am inherits wso2base {
   $third_party_keymanager = hiera("wso2::third_party_keymanager")
   $map_existing_auth_apps = hiera("wso2::map_existing_auth_apps")
   $jwt_token_generator = hiera("wso2::jwt_token_generator")
+  $add_concurrent_throttle_handler = hiera("wso2::add_concurrent_throttle_handler")
+  $api_export_import = hiera("wso2::api_export_import")
 
   wso2base::server { "${carbon_home}" :
     maintenance_mode   => $maintenance_mode,

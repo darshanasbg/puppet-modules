@@ -174,6 +174,8 @@ wso2::template_list :
   - repository/deployment/server/jaggeryapps/store/site/conf/site.json
   - repository/deployment/server/synapse-configs/default/api/_TokenAPI_.xml
   - repository/resources/api_templates/velocity_template.xml
+  - repository/deployment/server/webapps/api#am#publisher#v0.9.war
+
 wso2::file_list :
   - repository/components/lib/oauth-app-registration-1.0.0.jar
   - repository/components/lib/jwt-custom-claims-1.0.0.jar
@@ -207,5 +209,10 @@ wso2::service_name: wso2am
 
 wso2::add_concurrent_throttle_handler :
   enabled : true
+
+wso2::api_export_import
+  enabled : true
+  backend_api_host_ip : 192.168.69.117
+  backend_api_port  : 8080
 
 
