@@ -173,6 +173,7 @@ wso2::usermgt :
 wso2::template_list :
   - repository/deployment/server/jaggeryapps/store/site/conf/site.json
   - repository/deployment/server/synapse-configs/default/api/_TokenAPI_.xml
+  - repository/resources/api_templates/velocity_template.xml
 wso2::file_list :
   - repository/components/lib/oauth-app-registration-1.0.0.jar
   - repository/components/lib/jwt-custom-claims-1.0.0.jar
@@ -201,4 +202,10 @@ wso2::file_list :
   - repository/components/lib/svnkit-all-1.8.7.wso2v1.jar
 
 wso2::pack_extracted_dir : "%{::product_name}-%{::product_version}"
+
 wso2::service_name: wso2am
+
+wso2::add_concurrent_throttle_handler :
+  enabled : true
+
+
