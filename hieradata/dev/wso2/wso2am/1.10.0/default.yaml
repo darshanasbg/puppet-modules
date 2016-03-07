@@ -72,18 +72,18 @@ wso2::master_datasources :
   wso2am_db :
     name : WSO2AM_DB
     description : The datasource used for API Manager database
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://apimgtdb.mysql-wso2.com:3306/apimgtdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::mysql_username')}"
-    password : "%{hiera('wso2::datasources::common::mysql_password')}"
+    driver_class_name : "%{hiera('wso2::datasources::common::ext_db_driver_class_name')}"
+    url : "jdbc:mysql://%{hiera('wso2::datasources::common::ext_db_hostname')}:%{hiera('wso2::datasources::common::ext_db_port')}/apimgtdb"
+    username : "%{hiera('wso2::datasources::common::ext_db_username')}"
+    password : "%{hiera('wso2::datasources::common::ext_db_password')}"
     #secret_alias :
     jndi_config : jdbc/WSO2AM_DB
-    max_active: "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait: "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow: "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    default_auto_commit: "%{hiera('wso2::datasources::common::default_auto_commit')}"
-    validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
-    validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
+    max_active : "%{hiera('wso2::datasources::common::ext_db_max_active')}"
+    max_wait : "%{hiera('wso2::datasources::common::ext_db_max_wait')}"
+    test_on_borrow : "%{hiera('wso2::datasources::common::ext_db_test_on_borrow')}"
+    default_auto_commit : "%{hiera('wso2::datasources::common::ext_db_default_auto_commit')}"
+    validation_query : "%{hiera('wso2::datasources::mysql::ext_db_validation_query')}"
+    validation_interval : "%{hiera('wso2::datasources::common::ext_db_validation_interval')}"
 
   wso2_carbon_db :
     name : WSO2_CARBON_DB
@@ -104,36 +104,47 @@ wso2::master_datasources :
   wso2_config_db :
     name : WSO2CONFIG_DB
     description : The datasource used for config registry
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://configdb.mysql-wso2.com:3306/configdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::mysql_username')}"
-    password : "%{hiera('wso2::datasources::common::mysql_password')}"
+    driver_class_name : "%{hiera('wso2::datasources::common::ext_db_driver_class_name')}"
+    url : "jdbc:mysql://%{hiera('wso2::datasources::common::ext_db_hostname')}:%{hiera('wso2::datasources::common::ext_db_port')}/configdb"
+    username : "%{hiera('wso2::datasources::common::ext_db_username')}"
+    password : "%{hiera('wso2::datasources::common::ext_db_password')}"
     #secret_alias :
     jndi_config : jdbc/WSO2CONFIG_DB
-    max_active: "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait: "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow: "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
-    validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
+    max_active : "%{hiera('wso2::datasources::common::ext_db_max_active')}"
+    max_wait : "%{hiera('wso2::datasources::common::ext_db_max_wait')}"
+    test_on_borrow : "%{hiera('wso2::datasources::common::ext_db_test_on_borrow')}"
+    default_auto_commit : "%{hiera('wso2::datasources::common::ext_db_default_auto_commit')}"
+    validation_query : "%{hiera('wso2::datasources::mysql::ext_db_validation_query')}"
+    validation_interval : "%{hiera('wso2::datasources::common::ext_db_validation_interval')}"
 
   wso2_gov_db :
     name : WSO2GOV_DB
     description : The datasource used for gov registry
-    driver_class_name : com.mysql.jdbc.Driver
-    url : jdbc:mysql://govdb.mysql-wso2.com:3306/govdb?autoReconnect=true
-    username : "%{hiera('wso2::datasources::common::mysql_username')}"
-    password : "%{hiera('wso2::datasources::common::mysql_password')}"
+    driver_class_name : "%{hiera('wso2::datasources::common::ext_db_driver_class_name')}"
+    url : "jdbc:mysql://%{hiera('wso2::datasources::common::ext_db_hostname')}:%{hiera('wso2::datasources::common::ext_db_port')}/govdb"
+    username : "%{hiera('wso2::datasources::common::ext_db_username')}"
+    password : "%{hiera('wso2::datasources::common::ext_db_password')}"
     #secretAlias :
     jndi_config : jdbc/WSO2GOV_DB
-    max_active: "%{hiera('wso2::datasources::common::max_active')}"
-    max_wait: "%{hiera('wso2::datasources::common::max_wait')}"
-    test_on_borrow: "%{hiera('wso2::datasources::common::test_on_borrow')}"
-    validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
-    validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
+    max_active : "%{hiera('wso2::datasources::common::ext_db_max_active')}"
+    max_wait : "%{hiera('wso2::datasources::common::ext_db_max_wait')}"
+    test_on_borrow : "%{hiera('wso2::datasources::common::ext_db_test_on_borrow')}"
+    default_auto_commit : "%{hiera('wso2::datasources::common::ext_db_default_auto_commit')}"
+    validation_query : "%{hiera('wso2::datasources::mysql::ext_db_validation_query')}"
+    validation_interval : "%{hiera('wso2::datasources::common::ext_db_validation_interval')}"
 
 
-wso2::datasources::common::mysql_username : 'root'
-wso2::datasources::common::mysql_password : 'root'
+wso2::datasources::common::ext_db_username : 'root'
+wso2::datasources::common::ext_db_password : 'root'
+wso2::datasources::common::ext_db_driver_class_name : 'com.mysql.jdbc.Driver'
+wso2::datasources::common::ext_db_hostname : 'db.mysql-wso2.com'
+
+wso2::datasources::common::ext_db_max_active : "%{hiera('wso2::datasources::common::max_active')}"
+wso2::datasources::common::ext_db_max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
+wso2::datasources::common::ext_db_test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
+wso2::datasources::common::ext_db_default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
+wso2::datasources::common::ext_db_validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
+wso2::datasources::common::ext_db_validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
 # Registry mounting
 wso2::registry_mounts:
